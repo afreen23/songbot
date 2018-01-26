@@ -40,6 +40,7 @@ class Chat extends React.Component {
      <Grid container className={classes.container} direction='column' justify='space-between'>
        <Grid item xs={12} style={{padding: '20px 0px 0px 20px'}} className={classes.grid1}>
         <ChatBotMessage/>
+        <ChatBotMessage/>
         <UserMessage/>
        </Grid>
        <Grid item xs={12} className={classes.grid2}>
