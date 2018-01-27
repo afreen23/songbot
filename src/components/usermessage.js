@@ -24,7 +24,7 @@ render() {
         <div style={{backgroundColor: this.state.avatar}} className="bot-avatar"></div>
         <div className='bot-username-message'>
         <div className="username">{this.state.username}</div>
-        <div className="message">{this.state.message}</div></div>
+        <div className="message">{this.props.message}</div></div>
       </div>
     )
   }

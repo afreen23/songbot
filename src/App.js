@@ -34,17 +34,67 @@ const styles=theme=>({
 });
 
 class Chat extends React.Component {
+constructor(){
+    super()
+    this.state = {
+      chatHistory: [
+        {message: '',type: ''}
+      ]
+    }
+    this.handleSubmit=this.handleSubmit.bind(this);
+  }
+//fetching bot's greeting message
+componentWillMount() {
+  fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')
+  .then(results => results.json())
+  .then( data => {
+    let mes=data.output.text[0]
+    this.setState({chatHistory: [
+        {
+          type: 'bot',
+          message: mes
+        }  
+      ]});
+  })
+} 
+//rendering and sending user input
+handleSubmit(e) {
+  var obj= { type: 'user', message: e}
+  this.setState({chatHistory: this.state.chatHistory.concat(obj)});
+  fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db', {
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    firstParam: 'yourValue',
+    secondParam: 'yourOtherValue',
+  }),
+}).then(results => results.json())
+  .then( data => {
+      console.log(data);
+      let ms = data.output.text[1]
+      this.setState({chatHistory: [
+        {
+          type: 'bot',
+          message: ms
+        }  
+      ]});
+    })
+  .catch((error) => {
+        console.error(error);
+    });
+}
   render() {
     const {classes}= this.props;
     return (
      <Grid container className={classes.container} direction='column' justify='space-between'>
        <Grid item xs={12} style={{padding: '20px 0px 0px 20px'}} className={classes.grid1}>
-        <ChatBotMessage/>
-        <ChatBotMessage/>
-        <UserMessage/>
+        {this.state.chatHistory.map((chats,index) => chats.type==='user'? <UserMessage key={index} message={chats.message}/> : <ChatBotMessage message={chats.message} key={index}/> )}
        </Grid>
        <Grid item xs={12} className={classes.grid2}>
-        <Input/>
+        <Input onSubmit={this.handleSubmit}/>
       </Grid> 
     </Grid>
     );

@@ -38,8 +38,28 @@ const styles = theme => ({
   },
 });
 
-function Input(props) {
-  const { classes } = props;
+class Input extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state={value: ''}
+    this.handleKeyPress=this.handleKeyPress.bind(this);
+    this.handleChange=this.handleChange.bind(this);
+  }
+  
+  handleChange(e) {
+    this.setState({value: e.target.value});
+  }
+
+  handleKeyPress(e) {
+    if(e.key === 'Enter'||e.which === 13) {
+      this.props.onSubmit(e.target.value);
+      this.setState({value: ''});
+    }
+ console.log(this.state.response);
+  }
+
+  render() {
+  const { classes } = this.props;
 
   return (
 
@@ -53,9 +73,13 @@ function Input(props) {
             input: classes.textFieldInput,
           },
         }}
+        value={this.state.value}
+        onChange={this.handleChange}
+        onKeyPress={this.handleKeyPress}
       />
 
   );
+ }
 }
 
 Input.propTypes = {
