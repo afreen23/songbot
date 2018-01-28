@@ -61,26 +61,41 @@ componentWillMount() {
 handleSubmit(e) {
   var obj= { type: 'user', message: e}
   this.setState({chatHistory: this.state.chatHistory.concat(obj)});
-  fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db', {
-  method: 'POST',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    firstParam: 'yourValue',
-    secondParam: 'yourOtherValue',
-  }),
-}).then(results => results.json())
+   
+   function status(response) {
+   if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response)
+      } else {
+        return Promise.reject(new Error(response.statusText))
+      }
+    }
+
+    function json(response) {
+      return response.json()
+    }
+
+   //for sending reply
+   fetch('https://jsonplaceholder.typicode.com/posts', {
+    method: 'POST',
+    body: JSON.stringify({
+      input: e
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+  .catch(function(error) {
+    console.log('Fetch Error :-S', error);
+  });
+
+ //for getting reply
+  fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')//your endpoint here
+  .then(status)
+  .then(json)
   .then( data => {
-      console.log(data);
       let ms = data.output.text[1]
-      this.setState({chatHistory: [
-        {
-          type: 'bot',
-          message: ms
-        }  
-      ]});
+      let obj= { type: 'bot', message: ms}
+      this.setState({chatHistory: this.state.chatHistory.concat(obj)});
     })
   .catch((error) => {
         console.error(error);
