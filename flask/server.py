@@ -5,6 +5,9 @@ import youtube_dl
 import ssl
 import re
 import os
+from urllib.request import Request,urlopen
+import json
+
 
 class Songs(object):
     """docstrSongs"""
@@ -27,6 +30,7 @@ gaana["bollywood-top-50"]="https://gaana.com/playlist/gaana-dj-bollywood-top-50-
 gaana["international"]="https://gaana.com/playlist/gaana-dj-gaana-international-top-50"
 gaana["trending"]="https://gaana.com/songs"
 gaana["bollywood-weekly-hot-20"]="https://gaana.com/playlist/gaana-dj-bollywood-weekly-hot-20"
+
 @app.route('/gaana/<string:name>')
 def gaana_bollywood(name):
     ctx = ssl.create_default_context()
@@ -50,6 +54,28 @@ def gaana_bollywood(name):
             cleaned = re.sub(r'\d+$', '', tk)
             res+=cleaned.capitalize()+"<br/>"
     return res
+
+@app.route("/images/<string:songname>")
+def albumart(songname):
+    def get_soup(url,header):
+        return BeautifulSoup(urlopen(Request(url,headers=header)),'html.parser')
+
+    songname=songname+" Official Album Art High Quality"
+
+    url="https://www.google.co.in/search?q="+urllib.request.quote(songname)+"&source=lnms&tbm=isch"
+#
+#
+    header={'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36"}
+    soup = get_soup(url,header)
+
+    ActualImages=[]# contains the link for Large original images, type of  image
+    for a in soup.find_all("div",{"class":"rg_meta"}):
+        link , Type =json.loads(a.text)["ou"]  ,json.loads(a.text)["ity"]
+        ActualImages.append((link,Type))
+    return ActualImages[0][0]
+
+
+
 
 at40={}
 at40["top-40"]="https://www.at40.com/charts/top-40-238/latest/"

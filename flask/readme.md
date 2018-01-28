@@ -2,7 +2,7 @@ ENDPOINTS:
 
 /stream/<songname>  --plays official music video
 /src/<songname>   --for audio source of official music
-
+/images/songname  --for albumart
 /gaana/bollywood-top-50
 /gaana/international
 /gaana/trending
