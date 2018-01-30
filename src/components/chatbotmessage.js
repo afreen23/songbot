@@ -28,7 +28,11 @@ render() {
 }
 
 export default ChatBotMessage;
+<<<<<<< HEAD
 //options: text/charts/songs
+=======
+//options: text/charts/songscd songbio
+>>>>>>> master
 //if message === top [charts] => <List>
 //if message === song => play song + ui 
 
