@@ -5,11 +5,13 @@ import UserMessage from './components/usermessage';
 import Grid from 'material-ui/Grid';
 import Input from './components/footerinput';
 import { withStyles } from 'material-ui/styles'
+import ColoredScrollbars from './components/coloredcsrollbar';
 
 const styles=theme=>({
   grid1: {
     flexBasis: "90%",
     overflow: 'auto',
+    //backgroundColor: 'white'
     //padding: '20px 20px 0px 0px',
     //border:"1px solid white"
   },
@@ -28,8 +30,14 @@ const styles=theme=>({
    height: '660px',
    width: '1290px',
    margin: '8px 40px 0px 40px',
-   border: '4px solid white',
-   borderRadius: '20px'
+   // border: '4px solid grey',
+   borderRadius: '20px',
+   //background: '#38394D',
+   //background: "url('images/neon.jpeg')",
+   //backgroundSize: 'cover',
+   //backgroundReapeat: 'no-repeat'
+    //filter: 'opacity(90%)'
+   
   },
 });
 
@@ -38,7 +46,7 @@ constructor(){
     super()
     this.state = {
       chatHistory: [
-        {message: '',type: ''}
+        {message: '',type: '', mtype: ''}
       ]
     }
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -52,7 +60,8 @@ componentWillMount() {
     this.setState({chatHistory: [
         {
           type: 'bot',
-          message: mes
+          message: mes,
+          mtype: 'text'
         }  
       ]});
   })
@@ -61,26 +70,45 @@ componentWillMount() {
 handleSubmit(e) {
   var obj= { type: 'user', message: e}
   this.setState({chatHistory: this.state.chatHistory.concat(obj)});
-  fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db', {
-  method: 'POST',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    firstParam: 'yourValue',
-    secondParam: 'yourOtherValue',
-  }),
-}).then(results => results.json())
+   
+   function status(response) {
+   if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response)
+      } else {
+        return Promise.reject(new Error(response.statusText))
+      }
+    }
+
+    function json(response) {
+      return response.json()
+    }
+
+
+   fetch('https://jsonplaceholder.typicode.com/posts', {
+    method: 'POST',
+    body: JSON.stringify({
+      input: e
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+  .then(json)
+  .then(function(data) {
+    console.log(data);
+  })
+  .catch(function(error) {
+    console.log('Fetch Error :-S', error);
+  });
+
+
+  fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')
+  .then(status)
+  .then(json)
   .then( data => {
-      console.log(data);
       let ms = data.output.text[1]
-      this.setState({chatHistory: [
-        {
-          type: 'bot',
-          message: ms
-        }  
-      ]});
+      let obj= { type: 'bot', message: ms,mtype: 'text'}
+      this.setState({chatHistory: this.state.chatHistory.concat(obj)});
     })
   .catch((error) => {
         console.error(error);
@@ -91,7 +119,9 @@ handleSubmit(e) {
     return (
      <Grid container className={classes.container} direction='column' justify='space-between'>
        <Grid item xs={12} style={{padding: '20px 0px 0px 20px'}} className={classes.grid1}>
-        {this.state.chatHistory.map((chats,index) => chats.type==='user'? <UserMessage key={index} message={chats.message}/> : <ChatBotMessage message={chats.message} key={index}/> )}
+       <ColoredScrollbars>
+        {this.state.chatHistory.map((chats,index) => chats.type==='user'? <UserMessage key={index}  message={chats.message}/> : <ChatBotMessage mtype={chats.mtype} message={chats.message} key={index}/> )}
+       </ColoredScrollbars>
        </Grid>
        <Grid item xs={12} className={classes.grid2}>
         <Input onSubmit={this.handleSubmit}/>
@@ -102,3 +132,14 @@ handleSubmit(e) {
 }
 
 export default withStyles(styles)(Chat);
+
+
+/*
+ background: "-moz-linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%)", /* ff3.6+ 
+background: "-webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(0,0,128,1)), color-stop(93%, rgba(0,128,128,1)), color-stop(100%, rgba(0,128,128,1)))", /* safari4+,chrome 
+background: "-webkit-linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%)", /* safari5.1+,chrome10+ 
+background: "-o-linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%)", /* opera 11.10+ 
+background: "-ms-linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%)", /* ie10+ 
+background: "linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%)", /* w3c 
+filter: "progid:DXImageTransform.Microsoft.gradient( startColorstr='#008080', endColorstr='#000080',GradientType=1 )" 
+*/
