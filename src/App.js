@@ -83,7 +83,11 @@ handleSubmit(e) {
       return response.json()
     }
 
+<<<<<<< HEAD
 
+=======
+   //for sending reply
+>>>>>>> 58dc0c9c668648351082be7db6c12379d08dc1c3
    fetch('https://jsonplaceholder.typicode.com/posts', {
     method: 'POST',
     body: JSON.stringify({
@@ -93,21 +97,33 @@ handleSubmit(e) {
       "Content-type": "application/json; charset=UTF-8"
     }
   })
+<<<<<<< HEAD
   .then(json)
   .then(function(data) {
     console.log(data);
   })
+=======
+>>>>>>> 58dc0c9c668648351082be7db6c12379d08dc1c3
   .catch(function(error) {
     console.log('Fetch Error :-S', error);
   });
 
+<<<<<<< HEAD
 
   fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')
+=======
+ //for getting reply
+  fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')//your endpoint here
+>>>>>>> 58dc0c9c668648351082be7db6c12379d08dc1c3
   .then(status)
   .then(json)
   .then( data => {
       let ms = data.output.text[1]
+<<<<<<< HEAD
       let obj= { type: 'bot', message: ms,mtype: 'text'}
+=======
+      let obj= { type: 'bot', message: ms}
+>>>>>>> 58dc0c9c668648351082be7db6c12379d08dc1c3
       this.setState({chatHistory: this.state.chatHistory.concat(obj)});
     })
   .catch((error) => {
