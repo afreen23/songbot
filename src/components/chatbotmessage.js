@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import '../App.css';
 import Play from './playsong';
 import TopCharts from './charts.js';
+import SongsList from './songslist';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 class ChatBotMessage extends React.Component {
@@ -18,8 +19,8 @@ render() {
           <div className="username">{this.state.username}</div>
            <div className="message">
             { this.props.mtype=== 'text' && this.props.message}
-            { this.props.mtype=== 'charts' && <TopCharts/>}
-            { this.props.mtype=== 'song' && this.props.message}
+            { this.props.mtype=== 'songs' && <TopCharts/>}
+            { this.props.mtype=== 'charts' && <SongsList/>}
           </div>
         </div>
       </div>
@@ -28,11 +29,10 @@ render() {
 }
 
 export default ChatBotMessage;
-<<<<<<< HEAD
 //options: text/charts/songs
-=======
+
 //options: text/charts/songscd songbio
->>>>>>> master
+
 //if message === top [charts] => <List>
 //if message === song => play song + ui 
 
