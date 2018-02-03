@@ -1,7 +1,7 @@
 - alias: hasura
   config:
     configmap: controller-conf
-    namespace: physiologist36-hasura
+    namespace: catalysis65-hasura
   data: null
-  kubeContext: physiologist36
-  name: physiologist36
+  kubeContext: catalysis65
+  name: catalysis65
