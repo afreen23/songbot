@@ -30,3 +30,9 @@ remotes:
         dockerfile: microservices/bot/Dockerfile
         path: microservices/bot
 
+
+    '{{ cluster.metadata.namespaces.user }}.bot':
+      app:
+        dockerfile: microservices/bot/Dockerfile
+        path: microservices/bot
+
