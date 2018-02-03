@@ -23,10 +23,10 @@ render() {
           <div className="username">{this.state.username}</div>
            <div className="message">
             { type === 'text' && this.props.message}
-            { type === 'charts' && <TopCharts onClick={this.handleClick}/>}
-            { type === 'songslist' && <SongsList/>}
+            { type === 'text' && <TopCharts onClick={this.handleClick}/>}
+            { type === 'text' && <SongsList/>}
             { type === 'text' && <Play/>}
-            { type === 'video' && <Video/>}
+            { type === 'text' && <Video/>}
           </div>
         </div>
       </div>

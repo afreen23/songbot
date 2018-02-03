@@ -109,7 +109,7 @@ handleSubmit(e) {
   .then( data => {
       let ms = data.output.text[1]
       let typeOfmes= data.output.type[1]
-      let obj= { type: 'bot', message: ms, mtype: typeOfmes}
+      let obj= { type: 'bot', message: ms, mtype: 'text'}
 
       this.setState({chatHistory: this.state.chatHistory.concat(obj)});
     })
