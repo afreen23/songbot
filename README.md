@@ -28,9 +28,9 @@ The project (a.k.a. project directory) has a particular directory structure and 
 │   ├── 1504788327_create_table_userprofile.up.yaml
 │   └── 1504788327_create_table_userprofile.up.sql
 └── microservices 
-    ├── adminer
+    ├── ui
     │   └── k8s.yaml
-    └── flask
+    └── bot
         ├── src/
         ├── k8s.yaml
         └── Dockerfile
