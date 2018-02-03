@@ -1,0 +1,23 @@
+{
+  "name": "songbot",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@devexpress/dx-react-core": "^1.0.0-rc.2",
+    "@devexpress/dx-react-grid": "^1.0.0-rc.2",
+    "@devexpress/dx-react-grid-material-ui": "^1.0.0-rc.2",
+    "material-ui": "^1.0.0-beta.30",
+    "material-ui-icons": "^1.0.0-beta.17",
+    "react": "^16.2.0",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.0",
+    "react-scrollbar-js": "^1.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
