@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
-import GridList, { GridListTile ,GridListTileBar} from 'material-ui/GridList';
+import GridList, { GridListTile } from 'material-ui/GridList';
 import ListSubheader from 'material-ui/List/ListSubheader';
 
 const styles=theme=>({
@@ -28,6 +28,15 @@ const styles=theme=>({
 
 
 class TopCharts extends React.Component {
+	constructor(props) {
+		super(props);
+		this.handleClick=this.handleClick.bind(this);
+	}
+
+	handleClick(chartName) {
+        //this.props.onClick(chartName)
+	}
+
 	render() {
 	const data=[
 	{img: 'images/holly.jpeg', title: 'International Top 50'},
@@ -47,8 +56,8 @@ class TopCharts extends React.Component {
 				       <ListSubheader><Typography type='display1' style={{ color: 'white'}} >Top Charts</Typography></ListSubheader>
 				   </GridListTile>
 				    {data.map((datum,index) => (
-				    <GridListTile key={index} style={{width: 200}} >
-						<img src={datum.img}  />
+				    <GridListTile onClick={(e)=>this.handleClick(datum.title)} key={index} style={{width: 200}} >
+						<img alt="album art" src={datum.img}  />
 						<div className={classes.divi}>
 							<Typography type='headline' style={{marginTop: 50, color: 'white'}}>{datum.title}</Typography>
 						</div>

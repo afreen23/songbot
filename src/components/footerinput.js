@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
-import { FormControl } from 'material-ui/Form';
 import purple from 'material-ui/colors/purple';
 
 const styles = theme => ({

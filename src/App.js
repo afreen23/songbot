@@ -42,8 +42,8 @@ const styles=theme=>({
 });
 
 class Chat extends React.Component {
-constructor(){
-    super()
+constructor(props){
+    super(props)
     this.state = {
       chatHistory: [
         {message: '',type: '', mtype: ''}
@@ -61,7 +61,7 @@ componentWillMount() {
         {
           type: 'bot',
           message: mes,
-          mtype: 'charts'
+          mtype: 'text'
         }  
       ]});
   })
@@ -83,11 +83,7 @@ handleSubmit(e) {
       return response.json()
     }
 
-
-
-
    //for sending reply
-
    fetch('https://jsonplaceholder.typicode.com/posts', {
     method: 'POST',
     body: JSON.stringify({
@@ -97,7 +93,6 @@ handleSubmit(e) {
       "Content-type": "application/json; charset=UTF-8"
     }
   })
-
   .then(json)
   .then(function(data) {
     console.log(data);
@@ -107,17 +102,14 @@ handleSubmit(e) {
     console.log('Fetch Error :-S', error);
   });
 
-
-  fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')
-
  //for getting reply
-  fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')//your endpoint here
-
+  fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')
   .then(status)
   .then(json)
   .then( data => {
       let ms = data.output.text[1]
-      let obj= { type: 'bot', message: ms, mtype: 'charts'}
+      let typeOfmes= data.output.type[1]
+      let obj= { type: 'bot', message: ms, mtype: typeOfmes}
 
       this.setState({chatHistory: this.state.chatHistory.concat(obj)});
     })
@@ -131,7 +123,10 @@ handleSubmit(e) {
      <Grid container className={classes.container} direction='column' justify='space-between'>
        <Grid item xs={12} style={{padding: '20px 0px 0px 20px'}} className={classes.grid1}>
        <ColoredScrollbars>
-        {this.state.chatHistory.map((chats,index) => chats.type==='user'? <UserMessage key={index}  message={chats.message}/> : <ChatBotMessage mtype={chats.mtype} message={chats.message} key={index}/> )}
+        {this.state.chatHistory.map((chats,index) => 
+          chats.type==='user'? 
+          <UserMessage key={index}  message={chats.message}/> : 
+          <ChatBotMessage mtype={chats.mtype} message={chats.message} key={index}/> )}
        </ColoredScrollbars>
        </Grid>
        <Grid item xs={12} className={classes.grid2}>
