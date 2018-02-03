@@ -215,3 +215,14 @@ ui:
     upstreamServicePort: 80
 
 
+
+bot:
+  /:
+    corsPolicy: allow_all
+    upstreamService:
+      name: bot
+      namespace: '{{ cluster.metadata.namespaces.user }}'
+    upstreamServicePath: /
+    upstreamServicePort: 80
+
+
