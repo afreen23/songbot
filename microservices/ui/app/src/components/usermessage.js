@@ -5,7 +5,7 @@ import '../App.css';
 class UserMessage extends React.Component {
 constructor(){
     super()
-    this.state = {avatar: "rgb(212, 0, 116)", username: "Afreen", message: "Hey! I am superb!"}
+    this.state = {avatar: "rgb(212, 0, 116)", username: "Me", message: "Hey! I am superb!"}
   }
 render() {
     return (

@@ -12,12 +12,10 @@
     "react-scrollbar-js": "^1.0.1"
   },
   "scripts": {
-    "start": "cross-env REACT_APP_CLUSTER_NAME=physiologist36 react-scripts start",
-    "build": "cross-env REACT_APP_CLUSTER_NAME=physiologist36 react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "devDependencies": {
-    "cross-env": "^5.1.3"
   }
+  
 }
