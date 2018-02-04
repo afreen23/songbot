@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Card, { CardContent, CardMedia } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
-import SkipPreviousIcon from 'material-ui-icons/SkipPrevious';
 import PlayArrowIcon from 'material-ui-icons/PlayArrow';
-import SkipNextIcon from 'material-ui-icons/SkipNext';
 import GridList, { GridListTile } from 'material-ui/GridList';
 import Pause from 'material-ui-icons/Pause';
 
@@ -67,7 +64,7 @@ class Play extends React.Component {
      }
   }
   render() {
-  const { classes, theme } = this.props;
+  const { classes} = this.props;
 
   return (
   <GridList style={{marginTop: "10px"}} className={classes.root}>

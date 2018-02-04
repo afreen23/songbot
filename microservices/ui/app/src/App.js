@@ -52,7 +52,7 @@ constructor(props){
     this.handleSubmit=this.handleSubmit.bind(this);
   }
 //fetching bot's greeting message
-componentWillMount() {
+/*componentWillMount() {
   fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')
   .then(results => results.json())
   .then( data => {
@@ -65,7 +65,7 @@ componentWillMount() {
         }  
       ]});
   })
-} 
+} */
 //rendering and sending user input
 handleSubmit(e) {
   var obj= { type: 'user', message: e}
@@ -84,7 +84,7 @@ handleSubmit(e) {
     }
 
    //for sending reply
-   fetch('https://jsonplaceholder.typicode.com/posts', {
+   fetch('https://app.bullring34.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
       input: e

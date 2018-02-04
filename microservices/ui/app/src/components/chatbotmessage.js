@@ -22,11 +22,11 @@ render() {
         <div className='bot-username-message'>
           <div className="username">{this.state.username}</div>
            <div className="message">
-            { type === 'text' && this.props.message}
-            { type === 'text' && <TopCharts onClick={this.handleClick}/>}
-            { type === 'text' && <SongsList/>}
-            { type === 'text' && <Play/>}
-            { type === 'text' && <Video/>}
+            { this.props.message}
+            { type === '' && <TopCharts onClick={this.handleClick}/>}
+            { type === '' && <SongsList/>}
+            { type === '' && <Play/>}
+            { type === '' && <Video/>}
           </div>
         </div>
       </div>
@@ -41,6 +41,3 @@ export default ChatBotMessage;
 
 //if message === top [charts] => <List>
 //if message === song => play song + ui 
-
-//<iframe width="420" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY">
-             //</iframe>
