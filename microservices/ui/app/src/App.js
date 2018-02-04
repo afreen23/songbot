@@ -94,8 +94,10 @@ handleSubmit(e) {
     }
   })
   .then(json)
-  .then(function(data) {
-    console.log(data);
+  .then(data => {
+    let ms = data.output.text[0];
+    let obj= { type: 'bot', message: ms, mtype: 'text'}
+    this.setState({chatHistory: this.state.chatHistory.concat(obj)});
   })
 
   .catch(function(error) {
@@ -103,7 +105,7 @@ handleSubmit(e) {
   });
 
  //for getting reply
-  fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')
+ /* fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')
   .then(status)
   .then(json)
   .then( data => {
@@ -115,7 +117,7 @@ handleSubmit(e) {
     })
   .catch((error) => {
         console.error(error);
-    });
+    });*/
 }
   render() {
     const {classes}= this.props;
@@ -123,10 +125,10 @@ handleSubmit(e) {
      <Grid container className={classes.container} direction='column' justify='space-between'>
        <Grid item xs={12} style={{padding: '20px 0px 0px 20px'}} className={classes.grid1}>
        <ColoredScrollbars>
-        {this.state.chatHistory.map((chats,index) => 
-          chats.type==='user'? 
+       {this.state.chatHistory.map((chats,index) => 
+          (chats.type !== '') && (chats.type==='user'? 
           <UserMessage key={index}  message={chats.message}/> : 
-          <ChatBotMessage mtype={chats.mtype} message={chats.message} key={index}/> )}
+          <ChatBotMessage mtype={chats.mtype} message={chats.message} key={index}/> ))}
        </ColoredScrollbars>
        </Grid>
        <Grid item xs={12} className={classes.grid2}>
