@@ -1,39 +1,16 @@
-### Getting the Hasura project
+# ReactJs Web Version of SongBot
 
-```sh
-$ hasura quickstart jaison/fb-bot
-$ cd fb-bot
-# Add FACEBOOK_VERIFY_TOKEN to secrets. This is any pass phrase that you decide on, keep a note on what you are choosing as your verify token, we will be using it later while setting things up for your bot on the facebook developer page.
-$ hasura secrets update bot.fb_verify_token.key <YOUR-VERIFY-TOKEN>
-# Add FACEBOOK_PAGE_ACCESS_TOKEN to secrets
-$ hasura secrets update bot.fb_page_token.key <YOUR-FB-PAGE-ACCESS-TOKEN>
-# Add Movie db api token to secrets
-$ hasura secrets update bot.movie_db_token.key <YOUR-MOVIEDB-API-TOKEN>
-# Deploy
-$ git add . && git commit -m "Deployment commit"
-$ git push hasura master
-```
+This project contains the UI for the songBot made in ReactJs.\
 
-After the `git push` completes:
+## Local Deployment
 
-```sh
-$ hasura microservice list
-```
+1. Download or clone the repo
+2. ```cd microservices/ui/app```
+3. Run ```npm start```
 
-You will get an output like so:
+## Hausura deployment
 
-```sh
-INFO Getting microservices...                     
-INFO Custom microservices:                        
-NAME   STATUS    INTERNAL-URL(tcp,http)   EXTERNAL-URL
-bot    Running   bot.default              https://bot.apology69.hasura-app.io
-
-INFO Hasura microservices:                        
-NAME            STATUS    INTERNAL-URL(tcp,http)   EXTERNAL-URL
-auth            Running   auth.hasura              https://auth.apology69.hasura-app.io
-data            Running   data.hasura              https://data.apology69.hasura-app.io
-filestore       Running   filestore.hasura         https://filestore.apology69.hasura-app.io
-gateway         Running   gateway.hasura           
-le-agent        Running   le-agent.hasura          
-notify          Running   notify.hasura            https://notify.apology69.hasura-app.io
-platform-sync   Running   platform-sync.hasura     
+1. Create a reactjs template and add that as your microservice
+2. Replace the directories in your ```microservices/your_microservice_name``` with the contents of ```microservices/ui/app```
+3. ```git add .``` &  ```git commit ```
+4. ```git push hasura master ```
