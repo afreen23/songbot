@@ -23,10 +23,10 @@ render() {
           <div className="username">{this.state.username}</div>
            <div className="message">
             { this.props.message}
-            {/*{ type === '' && <TopCharts onClick={this.handleClick}/>}
-            { type === '' && <SongsList/>}
-            { type === '' && <Play/>}
-            { type === '' && <Video/>}*/}
+            { /*type === 'charts' && <TopCharts charts={this.props.data} onClick={this.handleClick}/>*/}
+            { type === 'charts' && <SongsList charts={this.props.data}/>}
+            { type === 'audio' && <Play song={this.props.data}/>}
+            { type === 'video' && <Video src={this.props.data}/>}
           </div>
         </div>
       </div>

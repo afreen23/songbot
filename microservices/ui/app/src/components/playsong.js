@@ -14,7 +14,7 @@ const styles=theme=>({
       fontSize: 'xx-large',
       overflow: 'hidden',
       position: 'relative',
-      border: '1px solid white',
+      //border: '1px solid white',
       
      },
      divi: {
@@ -27,7 +27,7 @@ const styles=theme=>({
         textAlign: 'center',
         background: 'rgba(0, 0, 0, 0.4)',
         //transform: 'translate(-50%, -50%)',
-        border: '1px solid red'
+        //border: '1px solid red'
      },
      button: {
       marginTop: 80
@@ -72,7 +72,7 @@ class Play extends React.Component {
             <img alt="album art" src="images/despacito.jpg"  />
             <div className={classes.divi}>
               <Typography type='display1' style={{marginTop: 50, color: 'white'}}>Despacito</Typography>
-              <IconButton className={classes.button} onClick={()=>this.handleClick("music/Dil Chori - Sonu Ke Titu Ki Sweety 320Kbps.mp3")}>
+              <IconButton className={classes.button} onClick={()=>this.handleClick(this.props.song["audiosrc"])}>
                 {this.state.isPlaying?
                  <Pause style={{width: 125, height: 150, color: 'white'}}/>:
                  <PlayArrowIcon style={{width: 150, height: 150, color: 'white'}}/>

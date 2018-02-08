@@ -45,46 +45,37 @@ class Chat extends React.Component {
 constructor(props){
     super(props)
     this.state = {
-      chatHistory: [
-        {message: '',type: '', mtype: ''}
-      ]
+      chatHistory: [],
+      object : ""
     }
     this.handleSubmit=this.handleSubmit.bind(this);
   }
 //fetching bot's greeting message
-/*componentWillMount() {
-  fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')
-  .then(results => results.json())
-  .then( data => {
-    let mes=data.output.text[0]
-    this.setState({chatHistory: [
-        {
-          type: 'bot',
-          message: mes,
-          mtype: 'text'
-        }  
-      ]});
+componentWillMount() {
+ fetch('https://app.boorish86.hasura-app.io/input', {
+    method: 'POST',
+    body: JSON.stringify({
+      input: 'hi'
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
   })
-} */
+  .then(response => response.json())
+  .then( data => {
+    console.log(data)
+    let ms = data.response;
+    let obj= { type: 'bot', message: ms, mtype: 'text'}
+    this.setState({chatHistory: this.state.chatHistory.concat(obj)});
+  })
+} 
 //rendering and sending user input
 handleSubmit(e) {
+  //for updating ui
   var obj= { type: 'user', message: e}
   this.setState({chatHistory: this.state.chatHistory.concat(obj)});
-   
-   function status(response) {
-   if (response.status >= 200 && response.status < 300) {
-        return Promise.resolve(response)
-      } else {
-        return Promise.reject(new Error(response.statusText))
-      }
-    }
-
-    function json(response) {
-      return response.json()
-    }
-
    //for sending reply
-   fetch('https://app.bullring34.hasura-app.io/input', {
+   fetch('https://app.boorish86.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
       input: e
@@ -93,31 +84,38 @@ handleSubmit(e) {
       "Content-type": "application/json; charset=UTF-8"
     }
   })
-  .then(json)
+  .then(response => response.json())
   .then(data => {
-    let ms = data.output.text[0];
-    let obj= { type: 'bot', message: ms, mtype: 'text'}
-    this.setState({chatHistory: this.state.chatHistory.concat(obj)});
+    console.log(data);
+    let audio,charts,watch,ms,obj,type='',supportingData;  
+      audio = {
+        audiosrc:data.audiosrc,
+        albumart:data.albumart
+      };
+      charts = data.charts;
+      watch = data.watch;
+    if(audio['audiosrc'] !== '')
+      type = 'audio'
+    if(charts["list"] !== '')
+      type= "charts"
+    if(watch !== "")
+      type= "video"
+    switch(type) {
+      case 'audio' :  supportingData = audio;
+      break;
+      case 'charts': supportingData = charts;
+      break;
+      case 'video' : supportingData = watch;
+      break;
+      default: supportingData = "";
+    }
+    ms = data.response;
+    obj= { type: 'bot', message: ms, mtype: type}
+    this.setState({chatHistory: this.state.chatHistory.concat(obj), object: supportingData });
   })
-
   .catch(function(error) {
     console.log('Fetch Error :-S', error);
   });
-
- //for getting reply
- /* fetch('https://my-json-server.typicode.com/afreen23/fakeapi2/db')
-  .then(status)
-  .then(json)
-  .then( data => {
-      let ms = data.output.text[1]
-      let typeOfmes= data.output.type[1]
-      let obj= { type: 'bot', message: ms, mtype: 'text'}
-
-      this.setState({chatHistory: this.state.chatHistory.concat(obj)});
-    })
-  .catch((error) => {
-        console.error(error);
-    });*/
 }
   render() {
     const {classes}= this.props;
@@ -126,9 +124,9 @@ handleSubmit(e) {
        <Grid item xs={12} style={{padding: '20px 0px 0px 20px'}} className={classes.grid1}>
        <ColoredScrollbars>
        {this.state.chatHistory.map((chats,index) => 
-          (chats.type !== '') && (chats.type==='user'? 
+          (chats.type==='user'? 
           <UserMessage key={index}  message={chats.message}/> : 
-          <ChatBotMessage mtype={chats.mtype} message={chats.message} key={index}/> ))}
+          <ChatBotMessage mtype={chats.mtype} data={this.state.object} message={chats.message} key={index}/> ))}
        </ColoredScrollbars>
        </Grid>
        <Grid item xs={12} className={classes.grid2}>

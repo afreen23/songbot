@@ -6,13 +6,24 @@ const styles= theme => ({
 });
 
 const Video = (props) => {
-	const {classes} =props;
+	const {classes , src} =props;
+	const urlParts = src.split("v=");
+	const id = urlParts[1];
+	const newurl = `http://www.youtube.com/embed/${id}`
 	return (
 			<div className={classes.root}>
-				<iframe title="video song" width="900" height="400" src="https://www.youtube.com/embed/tgbNymZ7vqY">
-				</iframe>
+				<iframe type="text/html" 
+    width="640" 
+    height="385" 
+    src={newurl}
+    frameBorder="0"
+    allowFullScreen
+    >
+</iframe>
 			</div>
 		)
 };
 
 export default withStyles(styles)(Video);
+
+////<iframe width="420" height="315" src="https://www.youtube.com/watch?v=kXYiU_JCYtU" frameBorder="0" allowFullScreen></iframe>}
