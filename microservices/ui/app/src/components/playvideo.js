@@ -9,7 +9,7 @@ const Video = (props) => {
 	const {classes , src} =props;
 	const urlParts = src.split("v=");
 	const id = urlParts[1];
-	const newurl = `http://www.youtube.com/embed/${id}`
+	const newurl = `https://www.youtube.com/embed/${id}`
 	return (
 			<div className={classes.root}>
 				<iframe type="text/html" 
