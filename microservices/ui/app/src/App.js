@@ -45,8 +45,7 @@ class Chat extends React.Component {
 constructor(props){
     super(props)
     this.state = {
-      chatHistory: [],
-      object : ""
+      chatHistory: []
     }
     this.handleSubmit=this.handleSubmit.bind(this);
   }
@@ -65,7 +64,7 @@ componentWillMount() {
   .then( data => {
     console.log(data)
     let ms = data.response;
-    let obj= { type: 'bot', message: ms, mtype: 'text'}
+    let obj= { type: 'bot', message: ms, mtype: 'text', data: {}}
     this.setState({chatHistory: this.state.chatHistory.concat(obj)});
   })
 } 
@@ -101,7 +100,7 @@ handleSubmit(e) {
     if(watch !== "")
       type= "video"
     switch(type) {
-      case 'audio' :  supportingData = audio;
+      case 'audio' : supportingData = audio;
       break;
       case 'charts': supportingData = charts;
       break;
@@ -110,8 +109,8 @@ handleSubmit(e) {
       default: supportingData = "";
     }
     ms = data.response;
-    obj= { type: 'bot', message: ms, mtype: type}
-    this.setState({chatHistory: this.state.chatHistory.concat(obj), object: supportingData });
+    obj= { type: 'bot', message: ms, mtype: type, data: supportingData}
+    this.setState({chatHistory: this.state.chatHistory.concat(obj)});
   })
   .catch(function(error) {
     console.log('Fetch Error :-S', error);
@@ -126,7 +125,7 @@ handleSubmit(e) {
        {this.state.chatHistory.map((chats,index) => 
           (chats.type==='user'? 
           <UserMessage key={index}  message={chats.message}/> : 
-          <ChatBotMessage mtype={chats.mtype} data={this.state.object} message={chats.message} key={index}/> ))}
+          <ChatBotMessage mtype={chats.mtype} data={chats.data} message={chats.message} key={index}/> ))}
        </ColoredScrollbars>
        </Grid>
        <Grid item xs={12} className={classes.grid2}>

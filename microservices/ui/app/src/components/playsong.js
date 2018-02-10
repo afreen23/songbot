@@ -69,9 +69,9 @@ class Play extends React.Component {
   return (
   <GridList style={{marginTop: "10px"}} className={classes.root}>
      <GridListTile style={{width: 400, height: 400}} >
-            <img alt="album art" src="images/despacito.jpg"  />
+            <img alt="album art" src={this.props.song["albumart"]}  />
             <div className={classes.divi}>
-              <Typography type='display1' style={{marginTop: 50, color: 'white'}}>Despacito</Typography>
+              {/*<Typography type='display1' style={{marginTop: 50, color: 'white'}}>Despacito</Typography>*/}
               <IconButton className={classes.button} onClick={()=>this.handleClick(this.props.song["audiosrc"])}>
                 {this.state.isPlaying?
                  <Pause style={{width: 125, height: 150, color: 'white'}}/>:
