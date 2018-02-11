@@ -1,7 +1,7 @@
 - alias: hasura
   config:
     configmap: controller-conf
-    namespace: cygnet68-hasura
+    namespace: dispirited72-hasura
   data: null
-  kubeContext: cygnet68
-  name: cygnet68
+  kubeContext: dispirited72
+  name: dispirited72

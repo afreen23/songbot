@@ -1,5 +1,6 @@
-description: Blank template for a Hasura project
-keywords: base, getting-started
+description: A boilerplate project for python-flask with a sample schema and integration
+  with Hasura data APIs.
+keywords: python, python3, flask, boilerplate
 media: {}
-name: base
-platformVersion: v0.15.23
+name: hello-python-flask
+platformVersion: v0.15.21
