@@ -1,11 +1,21 @@
 import React from 'react';
 import './App.css';
+import { createMuiTheme , MuiThemeProvider } from 'material-ui/styles';
 import ChatBotMessage from './components/chatbotmessage';
 import UserMessage from './components/usermessage';
 import Grid from 'material-ui/Grid';
 import Input from './components/footerinput';
 import { withStyles } from 'material-ui/styles'
 import ColoredScrollbars from './components/coloredcsrollbar';
+import Loading from './components/loading';
+
+// const theme = createMuiTheme({
+//   palette: {
+//     text: {
+//       secondary: '#fff'
+//     }
+//   },
+// });
 
 const styles=theme=>({
   grid1: {
@@ -45,12 +55,13 @@ class Chat extends React.Component {
 constructor(props){
     super(props)
     this.state = {
-      chatHistory: []
+      chatHistory: [{type: 'bot' , loading: true}],
+      loading: true
     }
     this.handleSubmit=this.handleSubmit.bind(this);
   }
 //fetching bot's greeting message
-componentWillMount() {
+componentDidMount() {
  fetch('https://app.boorish86.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
@@ -64,15 +75,21 @@ componentWillMount() {
   .then( data => {
     console.log(data)
     let ms = data.response;
-    let obj= { type: 'bot', message: ms, mtype: 'text', data: {}}
-    this.setState({chatHistory: this.state.chatHistory.concat(obj)});
+    let obj= [{ type: 'bot', message: ms, mtype: 'text', data: {},loading: false}]
+    this.setState({chatHistory: obj});
   })
+  .catch(function(error) {
+    console.log('Fetch Error :-S', error);
+  });
 } 
 //rendering and sending user input
 handleSubmit(e) {
   //for updating ui
+  var currentHistory = this.state.chatHistory;
   var obj= { type: 'user', message: e}
-  this.setState({chatHistory: this.state.chatHistory.concat(obj)});
+  currentHistory = currentHistory.concat(obj);
+  currentHistory = currentHistory.concat({type:'bot',loading: true});
+  this.setState({chatHistory: currentHistory });
    //for sending reply
    fetch('https://app.boorish86.hasura-app.io/input', {
     method: 'POST',
@@ -89,10 +106,11 @@ handleSubmit(e) {
     let audio,charts,watch,ms,obj,type='',supportingData;  
       audio = {
         audiosrc:data.audiosrc,
-        albumart:data.albumart
+        albumart:data.albumart,
+        name: data.name
       };
       charts = data.charts;
-      watch = data.watch;
+      watch = data.embed;
     if(audio['audiosrc'] !== '')
       type = 'audio'
     if(charts["list"] !== '')
@@ -109,8 +127,10 @@ handleSubmit(e) {
       default: supportingData = "";
     }
     ms = data.response;
-    obj= { type: 'bot', message: ms, mtype: type, data: supportingData}
-    this.setState({chatHistory: this.state.chatHistory.concat(obj)});
+    currentHistory.pop();
+    obj= { type: 'bot', message: ms, mtype: type, data: supportingData , loading: false}
+    currentHistory =currentHistory.concat(obj);
+    this.setState({chatHistory: currentHistory});
   })
   .catch(function(error) {
     console.log('Fetch Error :-S', error);
@@ -119,19 +139,21 @@ handleSubmit(e) {
   render() {
     const {classes}= this.props;
     return (
+  
      <Grid container className={classes.container} direction='column' justify='space-between'>
        <Grid item xs={12} style={{padding: '20px 0px 0px 20px'}} className={classes.grid1}>
        <ColoredScrollbars>
        {this.state.chatHistory.map((chats,index) => 
           (chats.type==='user'? 
           <UserMessage key={index}  message={chats.message}/> : 
-          <ChatBotMessage mtype={chats.mtype} data={chats.data} message={chats.message} key={index}/> ))}
+          (chats.loading ? <Loading key={index}/> : <ChatBotMessage mtype={chats.mtype} data={chats.data} message={chats.message}  key={index}/>)))}
        </ColoredScrollbars>
        </Grid>
        <Grid item xs={12} className={classes.grid2}>
         <Input onSubmit={this.handleSubmit}/>
       </Grid> 
     </Grid>
+
     );
   }
 }

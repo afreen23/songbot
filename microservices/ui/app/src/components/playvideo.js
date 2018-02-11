@@ -7,19 +7,19 @@ const styles= theme => ({
 
 const Video = (props) => {
 	const {classes , src} =props;
-	const urlParts = src.split("v=");
-	const id = urlParts[1];
-	const newurl = `https://www.youtube.com/embed/${id}`
+	const url = src;
 	return (
 			<div className={classes.root}>
-				<iframe type="text/html" 
-    width="640" 
-    height="385" 
-    src={newurl}
-    frameBorder="0"
-    allowFullScreen
-    >
-</iframe>
+				<iframe 
+					title="youtube viseo player"
+					//type="text/html" 
+				    width="640" 
+				    height="385" 
+				    src={props.src}
+				    frameBorder="0"
+				    allowFullScreen
+				    >
+				</iframe>
 			</div>
 		)
 };
