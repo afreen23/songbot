@@ -48,3 +48,15 @@ remotes:
         dockerfile: microservices/ui/Dockerfile
         path: microservices/ui
 
+
+    '{{ cluster.metadata.namespaces.user }}.www':
+      app:
+        dockerfile: microservices/www/Dockerfile
+        path: microservices/www
+
+
+    '{{ cluster.metadata.namespaces.user }}.www':
+      www:
+        dockerfile: microservices/www/Dockerfile
+        path: microservices/www
+
