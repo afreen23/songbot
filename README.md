@@ -24,7 +24,7 @@ A bot built with **[Watson Conversation Api](https://www.ibm.com/watson/develope
 - [Hasura CLI](https://docs.hasura.io/0.15/manual/install-hasura-cli.html)
 - [Git](https://git-scm.com)
 - [Python 3](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/) (required only for local development)
-- [npm](https://www.npmjs.com/get-npm) (required only fro local development)
+- [npm](https://www.npmjs.com/get-npm) (required only for local development)
 
 ### Quickstart
 
