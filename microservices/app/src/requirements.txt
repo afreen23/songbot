@@ -1,8 +1,0 @@
-flask
-requests
-ffmpeg-normalize
-gunicorn
-watson-developer-cloud
-beautifulsoup4
-youtube_dl
-# add new packages one per each line
