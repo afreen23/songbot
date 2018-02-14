@@ -5,3 +5,10 @@
   data: null
   kubeContext: aortae65
   name: aortae65
+- alias: development
+  config:
+    configmap: controller-conf
+    namespace: beautify51-hasura
+  data: null
+  kubeContext: beautify51
+  name: beautify51
