@@ -31,17 +31,14 @@ const styles=theme=>({
   },
   grid3: {
     width: '100%',
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     // minHeight: '805px',
     height: '100%'
    //height: '660px',
    //width: '1290px',
    //margin: '8px 40px 0px 40px',
    //border: '4px solid grey',
-=======
-=======
->>>>>>> parent of 4ee4a4d... added files
+
     height: '100%'
   },
   grid4: {
@@ -59,10 +56,8 @@ const styles=theme=>({
    //backgroundReapeat: 'no-repeat'
     //filter: 'opacity(90%)'
 
-<<<<<<< HEAD
->>>>>>> parent of 4ee4a4d... added files
-=======
->>>>>>> parent of 4ee4a4d... added files
+
+
   },
 });
 
