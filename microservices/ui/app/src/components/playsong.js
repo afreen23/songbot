@@ -1,4 +1,4 @@
-import React from 'react';
+  import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
@@ -14,6 +14,7 @@ const styles=theme=>({
       fontSize: 'xx-large',
       overflow: 'hidden',
       position: 'relative',
+   
       //border: '1px solid white',
       
      },
@@ -71,11 +72,11 @@ class Play extends React.Component {
      <GridListTile style={{width: 400, height: 400}} >
             <img alt="album art" src={this.props.song["albumart"]}  />
             <div className={classes.divi}>
-              <Typography variant='title' style={{marginTop: 50, color: 'white'}}>{this.props.song["name"]}</Typography>
+              <Typography variant='headline' style={{marginTop: 50, color: '#ffffffe3'}}>{this.props.song["name"]}</Typography>
               <IconButton className={classes.button} onClick={()=>this.handleClick(this.props.song["audiosrc"])}>
                 {this.state.isPlaying?
-                 <Pause style={{width: 125, height: 150, color: 'white'}}/>:
-                 <PlayArrowIcon style={{width: 150, height: 150, color: 'white'}}/>
+                 <Pause style={{width: 125, height: 150, color: '#ffffffbf'}}/>:
+                 <PlayArrowIcon style={{width: 150, height: 150, color: '#ffffffbf'}}/>
                }
               </IconButton>
             </div>

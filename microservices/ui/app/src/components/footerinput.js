@@ -5,8 +5,8 @@ import TextField from 'material-ui/TextField';
 import purple from 'material-ui/colors/purple';
 
 const styles = theme => ({
-  inputLabelFocused: {
-    color: purple[500],
+  root : {
+    margin: 0
   },
   inputInkbar: {
     '&:after': {
@@ -31,9 +31,6 @@ const styles = theme => ({
       borderColor: '#80bdff',
       boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
     },
-  },
-  textFieldFormLabel: {
-    fontSize: 18,
   },
 });
 
@@ -63,6 +60,7 @@ class Input extends React.Component {
   return (
 
       <TextField
+        className= {classes.root}
         fullWidth
         placeholder="Type here ......."
         InputProps={{

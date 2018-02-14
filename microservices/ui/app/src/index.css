@@ -1,3 +1,6 @@
+html {
+ height: 100%;
+}
 body {
   margin: 0;
   padding: 0;
@@ -9,10 +12,17 @@ background: -ms-linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%
 background: linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%); /* w3c */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008080', endColorstr='#000080',GradientType=1 ); /* ie6-9 */
   overflow: hidden;
+  height: 100vh;
+  width: 100%;
+  /*border: 1px solid white;*/
 }
 
 #root {
 	overflow-y: hidden;
+	flex-grow: 1;
+/*	border: 1px solid red;*/
+	height: 100vh;
+	width: 100%;
 }
 /*
 
