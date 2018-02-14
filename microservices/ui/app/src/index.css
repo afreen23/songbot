@@ -1,8 +1,3 @@
-
-/*html {
- height: 100%;
-}*/
-
 body {
   margin: 0;
   padding: 0;
@@ -18,12 +13,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008080', end
 
 #root {
 	overflow-y: hidden;
-
-	flex-grow: 1;
-/*	border: 1px solid red;*/
-	height: 100%;
-	width: 100%;
-
 }
 /*
 

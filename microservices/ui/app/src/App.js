@@ -31,14 +31,6 @@ const styles=theme=>({
   },
   grid3: {
     width: '100%',
-
-    // minHeight: '805px',
-    height: '100%'
-   //height: '660px',
-   //width: '1290px',
-   //margin: '8px 40px 0px 40px',
-   //border: '4px solid grey',
-
     height: '100%'
   },
   grid4: {
@@ -56,8 +48,6 @@ const styles=theme=>({
    //backgroundReapeat: 'no-repeat'
     //filter: 'opacity(90%)'
 
-
-
   },
 });
 
@@ -72,7 +62,7 @@ constructor(props){
   }
 //fetching bot's greeting message
 componentDidMount() {
- fetch('https://app.dispirited72.hasura-app.io/input', {
+ fetch('https://app.aortae65.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
       input: 'hi'
@@ -101,7 +91,7 @@ handleSubmit(e) {
   currentHistory = currentHistory.concat({type:'bot',loading: true});
   this.setState({chatHistory: currentHistory });
    //for sending reply
-   fetch('https://app.dispirited72.hasura-app.io/input', {
+   fetch('https://app.aortae65.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
       input: e

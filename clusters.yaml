@@ -1,7 +1,7 @@
 - alias: hasura
   config:
     configmap: controller-conf
-    namespace: dispirited72-hasura
+    namespace: hasura
   data: null
-  kubeContext: dispirited72
-  name: dispirited72
+  kubeContext: aortae65
+  name: aortae65
