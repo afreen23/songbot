@@ -1,7 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*html {
  height: 100%;
 }*/
+=======
+>>>>>>> parent of 4ee4a4d... added files
 =======
 >>>>>>> parent of 4ee4a4d... added files
 body {
@@ -20,10 +23,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008080', end
 #root {
 	overflow-y: hidden;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	flex-grow: 1;
 /*	border: 1px solid red;*/
 	height: 100%;
 	width: 100%;
+=======
+>>>>>>> parent of 4ee4a4d... added files
 =======
 >>>>>>> parent of 4ee4a4d... added files
 }
