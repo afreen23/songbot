@@ -2,7 +2,11 @@ import React from 'react';
 import {withStyles} from 'material-ui/styles';
 
 const styles= theme => ({
-	root:{marginTop: "10px"}
+	root:{
+		marginTop: "10px",
+		width: '100%',
+		// border: '1px solid white'
+	}
 });
 
 const Video = (props) => {
@@ -13,7 +17,7 @@ const Video = (props) => {
 				<iframe 
 					title="youtube viseo player"
 					//type="text/html" 
-				    width="640" 
+				    width="100%" 
 				    height="385" 
 				    src={props.src}
 				    frameBorder="0"
