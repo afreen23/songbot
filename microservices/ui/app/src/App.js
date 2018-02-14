@@ -37,7 +37,7 @@ const styles=theme=>({
     // minHeight: '660px',
     width: '100%',
     // minHeight: '805px',
-    height: '100vh'
+    height: '100%'
    //height: '660px',
    //width: '1290px',
    //margin: '8px 40px 0px 40px',
