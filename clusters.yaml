@@ -1,7 +1,7 @@
 - alias: development
   config:
     configmap: controller-conf
-    namespace: beautify51-hasura
+    namespace: aesthete80-hasura
   data: null
-  kubeContext: beautify51
-  name: beautify51
+  kubeContext: aesthete80
+  name: aesthete80
