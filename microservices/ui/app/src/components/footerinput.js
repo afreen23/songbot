@@ -51,7 +51,6 @@ class Input extends React.Component {
       this.props.onSubmit(e.target.value);
       this.setState({value: ''});
     }
- console.log(this.state.response);
   }
 
   render() {
