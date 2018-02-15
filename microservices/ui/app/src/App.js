@@ -56,7 +56,7 @@ constructor(props){
   }
 //fetching bot's greeting message
 componentDidMount() {
- fetch('https://ui.aesthete80.hasura-app.io/input', {
+ fetch('https://app.aesthete80.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
       input: 'hi'
@@ -85,7 +85,7 @@ handleSubmit(e) {
   currentHistory = currentHistory.concat({type:'bot',loading: true});
   this.setState({chatHistory: currentHistory });
    //for sending reply
-   fetch('https://ui.aesthete80.hasura-app.io/input', {
+   fetch('https://app.aesthete80.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
       input: e
