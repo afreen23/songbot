@@ -23,31 +23,25 @@ const styles=theme=>({
     overflow: 'auto',
     //backgroundColor: 'white'
     //padding: '20px 20px 0px 0px',
-    //border:"1px solid white"
+    // border:"1px solid white",
   },
   grid2: {
     flexBasis: "10%",
-    //border:"1px solid white"
-  },
-  grid3: {
-    width: '100%',
-    height: '100%'
-  },
-  grid4: {
-
+    // border:"1px solid white",
+    position: 'absolute',
+    bottom: 2,
+    right: 0,
+    left: 0
   },
   container: {
-   height: '660px',
-   width: '1290px',
-   margin: '8px 40px 0px 40px',
-   // border: '4px solid grey',
-   borderRadius: '20px',
-   //background: '#38394D',
-   //background: "url('images/neon.jpeg')",
-   //backgroundSize: 'cover',
-   //backgroundReapeat: 'no-repeat'
-    //filter: 'opacity(90%)'
-
+    // minHeight: '660px',
+    width: '100%',
+    // minHeight: '805px',
+    height: '100vh'
+   //height: '660px',
+   //width: '1290px',
+   //margin: '8px 40px 0px 40px',
+   //border: '4px solid grey',
   },
 });
 
@@ -62,7 +56,7 @@ constructor(props){
   }
 //fetching bot's greeting message
 componentDidMount() {
- fetch('https://app.aortae65.hasura-app.io/input', {
+ fetch('https://app.dispirited72.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
       input: 'hi'
@@ -91,7 +85,7 @@ handleSubmit(e) {
   currentHistory = currentHistory.concat({type:'bot',loading: true});
   this.setState({chatHistory: currentHistory });
    //for sending reply
-   fetch('https://app.aortae65.hasura-app.io/input', {
+   fetch('https://app.dispirited72.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
       input: e
@@ -149,7 +143,7 @@ handleSubmit(e) {
           (chats.loading ? <Loading key={index}/> : <ChatBotMessage mtype={chats.mtype} data={chats.data} message={chats.message}  key={index}/>)))}
        </ColoredScrollbars>
        </Grid>
-       <Grid item xs={12} className={classes.grid2}>
+       <Grid item xs={12}  className={classes.grid2}>
         <Input onSubmit={this.handleSubmit}/>
       </Grid>
     </Grid>
