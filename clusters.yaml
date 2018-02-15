@@ -5,3 +5,10 @@
   data: null
   kubeContext: aesthete80
   name: aesthete80
+- alias: production
+  config:
+    configmap: controller-conf
+    namespace: firehouse29-hasura
+  data: null
+  kubeContext: firehouse29
+  name: firehouse29
