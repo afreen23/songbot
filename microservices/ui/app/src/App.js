@@ -40,7 +40,6 @@ const styles=theme=>({
     height: '100vh'
    //height: '660px',
    //width: '1290px',
-   //margin: '8px 40px 0px 40px',
    //border: '4px solid grey',
   },
 });
@@ -67,7 +66,6 @@ componentDidMount() {
   })
   .then(response => response.json())
   .then( data => {
-    console.log(data)
     let ms = data.response;
     let obj= [{ type: 'bot', message: ms, mtype: 'text', data: {},loading: false}]
     this.setState({chatHistory: obj});
@@ -96,7 +94,6 @@ handleSubmit(e) {
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data);
     let audio,charts,watch,ms,obj,type='',supportingData;
       audio = {
         audiosrc:data.audiosrc,
@@ -155,12 +152,3 @@ handleSubmit(e) {
 export default withStyles(styles)(Chat);
 
 
-/*
- background: "-moz-linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%)", /* ff3.6+
-background: "-webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(0,0,128,1)), color-stop(93%, rgba(0,128,128,1)), color-stop(100%, rgba(0,128,128,1)))", /* safari4+,chrome
-background: "-webkit-linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%)", /* safari5.1+,chrome10+
-background: "-o-linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%)", /* opera 11.10+
-background: "-ms-linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%)", /* ie10+
-background: "linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%)", /* w3c
-filter: "progid:DXImageTransform.Microsoft.gradient( startColorstr='#008080', endColorstr='#000080',GradientType=1 )"
-*/
