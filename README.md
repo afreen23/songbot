@@ -54,7 +54,7 @@ Replace `aortae65` with your cluster name at these two places
 1. componentDidMount() {
     fetch('https://app.aortae65.hasura-app.io/input', {
     method: 'POST',....}
-2.handleSubmit(e) {
+2. handleSubmit(e) {
    ...............
    fetch('https://app.aortae65.hasura-app.io/input', {
     method: 'POST',.... }
