@@ -50,7 +50,7 @@ $ cd musicbot
 $ cd microservices/ui/app/src/
 $ gedit App.js
 
-Replace `aortae65` with your cluster name at these two places
+# Replace `aortae65` with your cluster name at these two places
 1. componentDidMount() {
     fetch('https://app.aortae65.hasura-app.io/input', {
     method: 'POST',....}
