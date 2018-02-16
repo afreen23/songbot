@@ -19,10 +19,18 @@ This project contains the UI for the songBot made in [ReactJs](https://reactjs.o
 
 ## Local Deployment
 
+### Prerequisites
+
+- [npm](https://www.npmjs.com/get-npm)
+
+### Deploy
+
 1. Download or clone the repo
 2. ```cd microservices/ui/app```
 3. Run ```npm install```
 4. Run ```npm start``` 
+
+Your app will be live on `localhost`
 
 ## Hasura deployment
 
