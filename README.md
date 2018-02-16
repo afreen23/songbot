@@ -140,8 +140,6 @@ To checkout the new URL, open the microservice URL in a browser :
 ```bash
 # open the url in browser
 $ hasura microservice open ui
-
-# add /json at the end of the url
 ```
 
 ### Debug
