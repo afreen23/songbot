@@ -72,11 +72,11 @@ $ gedit App.js
 $ git add . && git commit -m "First commit"
 $ git push hasura master
 ```
-Once the git push goes through, Flask microservice (called `app`) and ReactJs microservice will be available at a URL
+Once the git push goes through, Flask microservice (called `app`) and ReactJs microservice (called `ui`) will be available at a URL
 
 ```bash
 # Open the ReactJs app url in browser
-$ hasura microservice open app
+$ hasura microservice open ui
 ```
 
 
