@@ -55,7 +55,7 @@ Once the git push goes through, Flask microservice (called `app`) and ReactJs mi
 
 ```bash
 # Open the ReactJs app url in browser
-$ hasura microservice open app
+$ hasura microservice open ui
 ```
 
 If the browser shows this page, everything is working as expected.
@@ -128,8 +128,8 @@ Save the file, git add, commit and push to deploy the changes:
 
 ```bash
 # git add, commit and push to deploy
-$ git add src/server.py
-$ git commit -m "add new url /json"
+$ git add .
+$ git commit -m "some modifications"
 $ git push hasura master
 ```
 
@@ -150,11 +150,14 @@ If the push fails with an error `Updating deployment failed`, or the URL is show
 follow the instruction on the page and checkout the logs to see what is going wrong with the microservice:
 
 ```bash
-# see status of microservice app
+# see status of microservice 
 $ hasura microservice list
 
 # get logs for app
 $ hasura microservice logs app
+
+# get logs for ui
+$ hasura microservice logs ui
 ```
 
 You can deploy further changes by going through `Edit -> Deploy -> Verify -> Debug` cycle again and again.
@@ -171,4 +174,3 @@ Your app will be live on `localhost`
 
 
 Boilerplate Hasura project with [Flask](http://flask.pocoo.org/) microservice.
-
