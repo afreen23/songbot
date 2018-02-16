@@ -1,12 +1,12 @@
-# ReactJs Web Version of SongBot
+# ReactJs --- Web Version of songbot
 
-This project contains the UI for the songBot made in [ReactJs](https://reactjs.org/) and [material-ui](https://github.com/mui-org/material-ui).React is a javascript library for building user interfaces and material-ui uses react components to implement Google's Material Design.
+This project contains the UI for the songBot made in [ReactJs](https://reactjs.org/) and [material-ui](https://github.com/mui-org/material-ui).React is a javascript library for building user interfaces and Material UI is a CSS Framework and a set of React Components that implement Google’s Material Design.
 
 ## Design and Edit
 
 * The ui contains a single page for chat window (`microservices/ui/app/App.js`) 
 * All the messages are displayed inside chat window (`microservices/ui/app/components/chatbotmessage && microservices/ui/app/components/usermessage`)
-* [react-custom-scrollbars] (https://github.com/malte-wessel/react-custom-scrollbars) are used for addind clean and elegant       scrollbars (`microservices/ui/app/components/coloredscrollbar.js`)
+* [react-custom-scrollbars](https://github.com/malte-wessel/react-custom-scrollbars) are used for adding clean and elegant       scrollbars (`microservices/ui/app/components/coloredscrollbar.js`)
 * There are various components for playing audio , watching video , etc. (`microservices/ui/app/components`)
 
 ## Local Deployment
@@ -44,6 +44,22 @@ The `quickstart` command does the following:
 # Navigate to the project directory
 $ cd musicbot
 
+# Open App.js
+$ cd microservices/ui/app/src/
+$ gedit App.js
+
+# Replace `dispirited72` with your cluster name at these two places
+
+1. componentDidMount () {
+    fetch('https://app.dispirited72.hasura-app.io/input', {
+    method: 'POST',....}
+
+2. handleSubmit (e) {
+    ...............
+    fetch('https://app.dispirited72.hasura-app.io/input', {
+    method: 'POST',.... }
+
+
 # git add, commit and push to deploy
 $ git add . && git commit -m "First commit"
 $ git push hasura master
@@ -55,7 +71,6 @@ Once the git push goes through, Flask microservice (called `app`) and ReactJs mi
 $ hasura microservice open app
 ```
 
-If the browser shows this page, everything is working as expected.
-If it doesn't, go through the previous steps and see if you missed anything.
-![Gif HomePage](https://github.com/afreen23/musicbot/blob/master/readme-assets/bot.gif)
+
+
 
