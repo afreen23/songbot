@@ -6,7 +6,7 @@ A bot built with **[Watson Conversation Api](https://www.ibm.com/watson/develope
 ## Features
 
 * Play songs as audio
-* Watch video of songs 
+* Watch videos of songs 
 * Lists top charts 
 
 ## Usage Examples
@@ -132,7 +132,7 @@ The flask and reactjs microservice is located in `microservices/` directory in y
 
 `microservices/app/src/server.py` is where the main app is present. 
 `microservices/app/ui/app/` is where the ui of code resides .
-[More on Reactjs](https://github.com/afreen23/musicbot/blob/master/README-React.js.md)
+[Edit Reactjs](https://github.com/afreen23/songbot/blob/master/README-React.js.md)
 You can edit these files and deploy the changes.
 
 ### Deploy
