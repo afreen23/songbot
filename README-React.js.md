@@ -4,10 +4,18 @@ This project contains the UI for the songBot made in [ReactJs](https://reactjs.o
 
 ## Design and Edit
 
-* The ui contains a single page for chat window (`microservices/ui/app/App.js`) 
-* All the messages are displayed inside chat window (`microservices/ui/app/components/chatbotmessage && microservices/ui/app/components/usermessage`)
-* [react-custom-scrollbars](https://github.com/malte-wessel/react-custom-scrollbars) are used for adding clean and elegant       scrollbars (`microservices/ui/app/components/coloredscrollbar.js`)
-* There are various components for playing audio , watching video , etc. (`microservices/ui/app/components`)
+* The ui contains a single page for chat window 
+  
+  `microservices/ui/app/App.js` 
+* All the messages are displayed inside chat window 
+  
+  `microservices/ui/app/components/chatbotmessage && microservices/ui/app/components/usermessage`
+* [react-custom-scrollbars](https://github.com/malte-wessel/react-custom-scrollbars) are used for adding clean and elegant       scrollbars 
+  
+  `microservices/ui/app/components/coloredscrollbar.js`
+* There are various components for playing audio , watching video , etc. 
+
+  `microservices/ui/app/components`
 
 ## Local Deployment
 
