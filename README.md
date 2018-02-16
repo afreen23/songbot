@@ -54,6 +54,7 @@ $ gedit App.js
 1. componentDidMount() {
     fetch('https://app.aortae65.hasura-app.io/input', {
     method: 'POST',....}
+    
 2. handleSubmit(e) {
    ...............
    fetch('https://app.aortae65.hasura-app.io/input', {
