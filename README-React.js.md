@@ -1,4 +1,4 @@
-# ReactJs --- Web Version of songbot
+# ReactJs --- Web Version of musicbot
 
 This project contains the UI for the songBot made in [ReactJs](https://reactjs.org/) and [material-ui](https://github.com/mui-org/material-ui).React is a javascript library for building user interfaces and Material UI is a CSS Framework and a set of React Components that implement Google’s Material Design.
 
