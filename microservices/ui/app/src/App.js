@@ -119,9 +119,6 @@ handleSubmit(e) {
     obj= { type: 'bot', message: ms, mtype: type, data: supportingData , loading: false}
     currentHistory =currentHistory.concat(obj);
     this.setState({chatHistory: currentHistory});
-    var length = this.state.chatHistory.length;
-    var element= this.state.chatHistory[length-1];
-    element.scrollTop = element.scrollHeight;
   })
   .catch(function(error) {
     console.log('Fetch Error :-S', error);
