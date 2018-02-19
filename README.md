@@ -5,7 +5,7 @@ A bot built with **[Watson Conversation Api](https://www.ibm.com/watson/develope
 
 ## Features
 
-* Play songs as audio
+* Plays songs as audio
 * Watch videos of songs 
 * Lists top charts 
 
