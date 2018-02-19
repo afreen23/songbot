@@ -9,13 +9,7 @@ import { withStyles } from 'material-ui/styles'
 import ColoredScrollbars from './components/coloredcsrollbar';
 import Loading from './components/loading';
 
-// const theme = createMuiTheme({
-//   palette: {
-//     text: {
-//       secondary: '#fff'
-//     }
-//   },
-// });
+
 
 const styles=theme=>({
   grid1: {
@@ -94,6 +88,7 @@ handleSubmit(e) {
   })
   .then(response => response.json())
   .then(data => {
+    //storing data
     let audio,charts,watch,ms,obj,type='',supportingData;
       audio = {
         audiosrc:data.audiosrc,
@@ -102,12 +97,14 @@ handleSubmit(e) {
       };
       charts = data.charts;
       watch = data.embed;
+      //checking which type of data received
     if(audio['audiosrc'] !== '')
       type = 'audio'
     if(charts["list"] !== '')
       type= "charts"
     if(watch !== "")
       type= "video"
+    //now storing that type data value
     switch(type) {
       case 'audio' : supportingData = audio;
       break;
@@ -122,6 +119,9 @@ handleSubmit(e) {
     obj= { type: 'bot', message: ms, mtype: type, data: supportingData , loading: false}
     currentHistory =currentHistory.concat(obj);
     this.setState({chatHistory: currentHistory});
+    var length = this.state.chatHistory.length;
+    var element= this.state.chatHistory[length-1];
+    element.scrollTop = element.scrollHeight;
   })
   .catch(function(error) {
     console.log('Fetch Error :-S', error);
