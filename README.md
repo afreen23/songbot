@@ -1,12 +1,12 @@
-# songbot
+# musicbot
 
 ## About
 A bot built with **[Watson Conversation Api](https://www.ibm.com/watson/developercloud/conversation/api/v1/?cm_mc_uid=24808535902515066792134&cm_mc_sid_50200000=1512714807)** backend in **python** and frontend in **react js**.
 
 ## Features
 
-* Play songs as audio
-* Watch video of songs 
+* Plays songs as audio
+* Watch videos of songs 
 * Lists top charts 
 
 ## Usage Examples
@@ -46,6 +46,20 @@ The `quickstart` command does the following:
 # Navigate to the project directory
 $ cd musicbot
 
+# Open App.js
+$ cd microservices/ui/app/src/
+$ gedit App.js
+
+# Replace `aortae65` with your cluster name at these two places
+1. componentDidMount() {
+    fetch('https://app.aortae65.hasura-app.io/input', {
+    method: 'POST',....}
+    
+2. handleSubmit(e) {
+   ...............
+   fetch('https://app.aortae65.hasura-app.io/input', {
+    method: 'POST',.... }
+
 # git add, commit and push to deploy
 $ git add . && git commit -m "First commit"
 $ git push hasura master
@@ -55,7 +69,7 @@ Once the git push goes through, Flask microservice (called `app`) and ReactJs mi
 
 ```bash
 # Open the ReactJs app url in browser
-$ hasura microservice open app
+$ hasura microservice open ui
 ```
 
 If the browser shows this page, everything is working as expected.
@@ -119,7 +133,7 @@ The flask and reactjs microservice is located in `microservices/` directory in y
 
 `microservices/app/src/server.py` is where the main app is present. 
 `microservices/app/ui/app/` is where the ui of code resides .
-[More on Reactjs](https://github.com/afreen23/musicbot/blob/master/README-React.js.md)
+[Edit Reactjs](https://github.com/afreen23/songbot/blob/master/README-React.js.md)
 You can edit these files and deploy the changes.
 
 ### Deploy
@@ -128,8 +142,8 @@ Save the file, git add, commit and push to deploy the changes:
 
 ```bash
 # git add, commit and push to deploy
-$ git add src/server.py
-$ git commit -m "add new url /json"
+$ git add .
+$ git commit -m "some modifications"
 $ git push hasura master
 ```
 
@@ -140,8 +154,6 @@ To checkout the new URL, open the microservice URL in a browser :
 ```bash
 # open the url in browser
 $ hasura microservice open ui
-
-# add /json at the end of the url
 ```
 
 ### Debug
@@ -150,11 +162,14 @@ If the push fails with an error `Updating deployment failed`, or the URL is show
 follow the instruction on the page and checkout the logs to see what is going wrong with the microservice:
 
 ```bash
-# see status of microservice app
+# see status of microservice 
 $ hasura microservice list
 
 # get logs for app
 $ hasura microservice logs app
+
+# get logs for ui
+$ hasura microservice logs ui
 ```
 
 You can deploy further changes by going through `Edit -> Deploy -> Verify -> Debug` cycle again and again.
@@ -171,4 +186,3 @@ Your app will be live on `localhost`
 
 
 Boilerplate Hasura project with [Flask](http://flask.pocoo.org/) microservice.
-
