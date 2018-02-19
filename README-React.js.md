@@ -2,6 +2,10 @@
 
 This project contains the UI for the songBot made in [ReactJs](https://reactjs.org/) and [material-ui](https://github.com/mui-org/material-ui).React is a javascript library for building user interfaces and Material UI is a CSS Framework and a set of React Components that implement Google’s Material Design.
 
+![image1](https://github.com/afreen23/songbot/blob/master/readme_assets/hub1.png)
+![image2](https://github.com/afreen23/songbot/blob/master/readme_assets/hub2.png)
+![gif](https://github.com/afreen23/songbot/blob/master/readme_assets/hub3.gif)
+
 ## Design and Edit
 
 * The ui contains a single page for chat window 
