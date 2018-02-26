@@ -6,7 +6,6 @@ import UserMessage from './components/usermessage';
 import Grid from 'material-ui/Grid';
 import Input from './components/footerinput';
 import { withStyles } from 'material-ui/styles'
-import ColoredScrollbars from './components/coloredscrollbar';
 import Loading from './components/loading';
 import { Scrollbars } from 'react-custom-scrollbars';
 
