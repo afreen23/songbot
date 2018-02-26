@@ -6,9 +6,9 @@ import UserMessage from './components/usermessage';
 import Grid from 'material-ui/Grid';
 import Input from './components/footerinput';
 import { withStyles } from 'material-ui/styles'
-import ColoredScrollbars from './components/coloredcsrollbar';
+import ColoredScrollbars from './components/coloredscrollbar';
 import Loading from './components/loading';
-
+import { Scrollbars } from 'react-custom-scrollbars';
 
 
 const styles=theme=>({
@@ -46,6 +46,9 @@ constructor(props){
       loading: true
     }
     this.handleSubmit=this.handleSubmit.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+        this.renderView = this.renderView.bind(this);
+        this.renderThumb = this.renderThumb.bind(this);
   }
 //fetching bot's greeting message
 componentDidMount() {
@@ -70,12 +73,18 @@ componentDidMount() {
 }
 //rendering and sending user input
 handleSubmit(e) {
+  var currentHistory;
   //for updating ui
-  var currentHistory = this.state.chatHistory;
+  let promise = new Promise((resolve, reject) => {
+  currentHistory = this.state.chatHistory;
   var obj= { type: 'user', message: e}
   currentHistory = currentHistory.concat(obj);
   currentHistory = currentHistory.concat({type:'bot',loading: true});
   this.setState({chatHistory: currentHistory });
+    resolve();
+  })
+
+  promise.then(()=> this.refs.scrollbars.scrollToBottom())
    //for sending reply
    fetch('https://app.aesthete80.hasura-app.io/input', {
     method: 'POST',
@@ -119,23 +128,62 @@ handleSubmit(e) {
     obj= { type: 'bot', message: ms, mtype: type, data: supportingData , loading: false}
     currentHistory =currentHistory.concat(obj);
     this.setState({chatHistory: currentHistory});
+    this.refs.scrollbars.scrollToBottom();
   })
   .catch(function(error) {
     console.log('Fetch Error :-S', error);
   });
 }
+
+handleUpdate(values) {
+        const { top } = values;
+        this.setState({ top });
+    }
+
+    renderView({ style, ...props }) {
+        const { top } = this.state;
+        const viewStyle = {
+            padding: 15,
+            //backgroundColor: '#38394D',
+            color: `rgb(${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))})`
+        };
+        return (
+            <div
+                className="box"
+                style={{ ...style, ...viewStyle }}
+                {...props}/>
+        );
+    }
+
+    renderThumb({ style, ...props }) {
+        //const { top } = this.state;
+        const thumbStyle = {
+            backgroundColor: 'grey'
+        };
+        return (
+            <div
+                style={{ ...style, ...thumbStyle }}
+                {...props}/>
+        );
+    }
   render() {
     const {classes}= this.props;
     return (
 
      <Grid container className={classes.container} direction='column' justify='space-between'>
        <Grid item xs={12} style={{padding: '20px 0px 0px 20px'}} className={classes.grid1}>
-       <ColoredScrollbars>
+       <Scrollbars
+        ref="scrollbars"
+        renderView={this.renderView}
+        renderThumbHorizontal={this.renderThumb}
+        renderThumbVertical={this.renderThumb}
+        onUpdate={this.handleUpdate}
+        {...this.props}>
        {this.state.chatHistory.map((chats,index) =>
           (chats.type==='user'?
           <UserMessage key={index}  message={chats.message}/> :
           (chats.loading ? <Loading key={index}/> : <ChatBotMessage mtype={chats.mtype} data={chats.data} message={chats.message}  key={index}/>)))}
-       </ColoredScrollbars>
+       </Scrollbars>
        </Grid>
        <Grid item xs={12}  className={classes.grid2}>
         <Input onSubmit={this.handleSubmit}/>
