@@ -1,74 +1,162 @@
 from src import app
-from flask import jsonify,request
+from flask import jsonify,request,Response,Flask
 from watson_developer_cloud import ConversationV1
 from bs4 import BeautifulSoup
 import youtube_dl
 import ssl
 import re
 import os
+import sys
 import requests
 from urllib.request import Request,urlopen
 import json
 import urllib.request, urllib.parse,urllib.error
 
-def controller(text):
-    songname1=''
-    conversation = ConversationV1(
-
-        username='32bd799a-2d8b-4251-99c8-d1d57b4f5dfb',
-        password="AuRjEkVRr1oK",
-        url='https://gateway.watsonplatform.net/conversation/api',
-        version='2017-04-21')
-
-    workspace_id="ddab1874-15b1-4c06-9b1a-5083e6c364cd"
-    context={}
-
-    response = conversation.message(workspace_id=workspace_id, input={
-        'text': text},context=context)
-
-    #response = conversation.get_dialog_node(
-    #    workspace_id = workspace_id,
-    #    dialog_node = 'node_4_1517233973256'
-    #)
-
-    #Hi!!You look great!! What Music do you want me to play for you? Any Charts Anywhere Simply name!! :-)
-    #Holla Whassup wat-music here!!:-)
 
 
-    #
-    #/gaana/bollywood-top-50#default / weekly correct
-    #/gaana/international
-    #/gaana/trending
-    #/gaana/bollywood-weekly-hot-20
-    #
-    #/american-top-40/top-40
-    #/american-top-40/hot-ac
-    #
-    #/spotify/global_daily_viral
-    #/spotify/global_weekly_viral
-    #/spotify/global_top_daily
-    #/spotify/global_top_daily
+
+spotify_endpoints={}
+spotify_endpoints["daily viral"]="https://spotifycharts.com/viral/"
+spotify_endpoints["weekly viral"]="https://spotifycharts.com/viral/global/weekly/latest"
+spotify_endpoints["top daily"]="https://spotifycharts.com/regional/"
+spotify_endpoints["top weekly"]="https://spotifycharts.com/regional/global/weekly/latest"
+
+at40={}
+at40["top"]="https://www.at40.com/charts/top-40-238/latest/"
+at40["hot"]="https://www.at40.com/charts/hot-ac-243/latest/"
+ignore=["Buy Song","Song saved to My Music"]
+
+gaana={}
+gaana["bollywood top"]="https://gaana.com/playlist/gaana-dj-bollywood-top-50-1"
+gaana["international"]="https://gaana.com/playlist/gaana-dj-gaana-international-top-50"
+gaana["trending"]="https://gaana.com/songs"
+gaana["bollywood weekly hot"]="https://gaana.com/playlist/gaana-dj-bollywood-weekly-hot-20"
 
 
-    spotify_endpoints={}
-    spotify_endpoints["daily viral"]="https://spotifycharts.com/viral/"
-    spotify_endpoints["weekly viral"]="https://spotifycharts.com/viral/global/weekly/latest"
-    spotify_endpoints["top daily"]="https://spotifycharts.com/regional/"
-    spotify_endpoints["top weekly"]="https://spotifycharts.com/regional/global/weekly/latest"
+class Song(object):
+    """docstring for ."""
+    def __init__(self):
+        self.id=""
+        self.ytd=""
+        self.title=""
+        self.chartname=""
+        self.charttype=""
+        self.chartlist=""
+        self.albumart=""
+        self.audiosrc=""
+        self.response=""
+        self.view=""
+        self.downloadable=""
 
-    at40={}
-    at40["top"]="https://www.at40.com/charts/top-40-238/latest/"
-    at40["hot"]="https://www.at40.com/charts/hot-ac-243/latest/"
-    ignore=["Buy Song","Song saved to My Music"]
+    def getYoutube(self,song):
+        song=song+" official music video "
+        songss=song.split()
+        print(songss)
+        base_url="https://www.youtube.com/results?search_query="+'+'.join(songss)
+        print(base_url)
+        url="https://www.youtube.com"
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        html=urllib.request.urlopen(base_url).read()
+        temp=html.decode()
+        soup=BeautifulSoup(temp,"html.parser")
+        list1=soup.find_all('a')
+        for i in list1:
+            temp=i["href"]
+            temp1=temp.split('?')
+            if("/watch" in temp1[0]):
+                url=url+temp
+                break
+        baseurl="https://www.youtube.com/embed/"
+        view=url.split('=')[-1]
+        baseurl=baseurl+view
+        ydl_opts = {
+        'format': 'bestaudio/best',
+        'postprocessors': [{
+                            'key': 'FFmpegExtractAudio',
+                            'preferredcodec': 'mp3',
+                            'preferredquality': '192',
+                            }],
+                            'quiet': True,
+                            'restrictfilenames': True,
+                            'prefer_insecure':True
+                            }
 
-    gaana={}
-    gaana["bollywood top"]="https://gaana.com/playlist/gaana-dj-bollywood-top-50-1"
-    gaana["international"]="https://gaana.com/playlist/gaana-dj-gaana-international-top-50"
-    gaana["trending"]="https://gaana.com/songs"
-    gaana["bollywood weekly hot"]="https://gaana.com/playlist/gaana-dj-bollywood-weekly-hot-20"
+        ydl = youtube_dl.YoutubeDL(ydl_opts)
 
+        temp=ydl.extract_info(url,download=False)
+        self.title=temp["title"]
+        self.ytd=baseurl
+        self.view=view
+        self.audiosrc=temp["url"]
+        return
 
-    def gaana_name(name):
+    def Response(self,text):
+        self.response=response
+    def getspotify(self,name):
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        print(name,file=sys.stderr)
+
+        try:
+            url=spotify_endpoints[name]
+        except :
+            return "Invalid Endpoint",404
+        html=urllib.request.urlopen(url).read()
+        temp=html.decode()
+        soup=BeautifulSoup(temp,"html.parser")
+        songslist=soup.find_all("strong")
+        artistlist=soup.find_all("span")
+        temp=[]
+        print(name,file=sys.stderr)
+
+        for i in artistlist:
+            if(len(i.contents)==1):
+                temp.append(i.contents[0])
+        res=""
+        if(len(songslist)!=len(temp)):
+            return "Some Error Occured Please give us time to fix it",404
+        for i in range(len(songslist)):
+            res+=(songslist[i].contents[0]+" "+temp[i]+"\n")
+
+        self.chartname="Spotify"
+        self.charttype=name
+        self.chartlist=res
+        return
+
+    def getAt40(self,choice):
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        try:
+            url=at40[choice]
+        except Exception as e:
+            raise e
+
+        html=urllib.request.urlopen(url).read()
+        temp=html.decode()
+        soup=BeautifulSoup(temp,"html.parser")
+        a=soup.find_all("a",target="_blank")
+        res=""
+        j=0
+        for i in a:
+            try:
+                if('songs' in i['href'] and len(i.contents)==1 and i.contents[0] not in ignore):
+                    songname=i.contents[0]
+                    j+=1
+                    if(j%2==0):
+                        res+=(songname+"'\n'")
+                    else:
+                        res+=(songname+" - ")
+            except:
+                pass
+        self.chartlist=res
+        self.chartname="At-40"
+        self.chartname=choice
+        return
+    def gaana_name(self,name):
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE
@@ -89,10 +177,11 @@ def controller(text):
                 tk=tk.replace('-',' ')
                 cleaned = re.sub(r'\d+$', '', tk)
                 res+=cleaned.capitalize()+"<br/>"
-        return res
-
-
-    def albumart(songname):
+        self.chartname="Gaana"
+        self.chartlist=res
+        self.charttype=name
+        return
+    def albumart(self,songname):
         spotifyfinal=""
         itunesfinal=""
         spotifyalbumart=""
@@ -143,244 +232,138 @@ def controller(text):
                 spotifyalbumart=temp[0].split('(')[1][:-1]
 
             if(spotifyfinal!=''):
-                return spotifyalbumart
+                self.albumart= spotifyalbumart
+                return
             else:
-                return finalurl
+                self.albumart=finalurl
+                return
         except Exception as e:
             raise e
+    def getDownloads(self,text):
+        downloadwords=["download","save","offline"]
 
-    def at_40(choice):
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-        try:
-            url=at40[choice]
-        except :
-            return 'Invalid url',404
-        html=urllib.request.urlopen(url).read()
-        temp=html.decode()
-        soup=BeautifulSoup(temp,"html.parser")
-        a=soup.find_all("a",target="_blank")
-        res=""
-        j=0
-        for i in a:
-            try:
-                if('songs' in i['href'] and len(i.contents)==1 and i.contents[0] not in ignore):
-                    songname=i.contents[0]
-                    j+=1
-                    if(j%2==0):
-                        res+=(songname+"'\n'")
-                    else:
-                        res+=(songname+" - ")
-            except:
-                pass
-        return res
+        temp=text.split(' ')
+        parse=""
+        for i in temp:
+            if(i in downloadwords):
+                continue
+            parse+=i+" "
+        print(parse,file=sys.stderr)
+        self.getYoutube(parse)
+        self.audiosrc=""
+        self.ytd=""
+        url='https://t1.youtube7.download/check.php?callback=jQuery111204704801896818165_1519396305950&v='+self.view+'&f=mp3&_=1519396305951'
+        fhand=requests.get(url)
+        temp=fhand.text
+        q=re.findall('\{.*?\}',temp)
 
-    def getspotify(name):
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-        try:
-            url=spotify_endpoints[name]
-        except :
-            return "Invalid Endpoint",404
-        url="https://spotifycharts.com/viral/"
-        html=urllib.request.urlopen(url).read()
-        temp=html.decode()
-        soup=BeautifulSoup(temp,"html.parser")
-        songslist=soup.find_all("strong")
-        artistlist=soup.find_all("span")
-        temp=[]
-        for i in artistlist:
-            if(len(i.contents)==1):
-                temp.append(i.contents[0])
-        res=""
-        if(len(songslist)!=len(temp)):
-            return "Some Error Occured Please give us time to fix it",404
-        for i in range(len(songslist)):
-            res+=(songslist[i].contents[0]+" "+temp[i]+"\n")
-        return res
+        s=json.loads(q[0])
+        sd = "t1.youtube7.download"
+
+        NewUrlMp3 = 'https://' + sd + '/' + s["sid"] + '/' + s["hash"] + '/' + self.view
+        self.downloadable=NewUrlMp3
+        print(NewUrlMp3,file=sys.stderr)
+        return
 
 
-    def stream(song):
-        song=song+" official music video "
-        songss=song.split()
-        print(songss)
-        base_url="https://www.youtube.com/results?search_query="+'+'.join(songss)
-        print(base_url)
-        url="https://www.youtube.com"
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-        html=urllib.request.urlopen(base_url).read()
-        temp=html.decode()
-        soup=BeautifulSoup(temp,"html.parser")
-        list1=soup.find_all('a')
-        for i in list1:
-            temp=i["href"]
-            temp1=temp.split('?')
-            if("/watch" in temp1[0]):
-                url=url+temp
-                break
-        baseurl="https://www.youtube.com/embed/"
-        view=url.split('=')[-1]
-        baseurl=baseurl+view
-        ydl_opts = {
-        'format': 'bestaudio/best',
-        'postprocessors': [{
-                            'key': 'FFmpegExtractAudio',
-                            'preferredcodec': 'mp3',
-                            'preferredquality': '192',
-                            }],
-                            'quiet': True,
-                            'restrictfilenames': True,
-                            'prefer_insecure':True
-                            }
+    def getJSON(self):
+        result={"response":self.response,
+        "charts":{"name":self.chartname,"type":self.charttype,"list":self.chartlist},
+        "watch":self.ytd,
+        "audiosrc":self.audiosrc,
+        "albumart":self.albumart,
+        "name":self.title,
+        "download":self.downloadable,
+        "view":self.view
+        }
+        return result
 
-        ydl = youtube_dl.YoutubeDL(ydl_opts)
+songmetadata=Song()
 
-        temp=ydl.extract_info(url,download=False)
-        return [baseurl,temp['title']]
+def controller(text):
+    songname1=''
+    conversation = ConversationV1(
 
+        username='32bd799a-2d8b-4251-99c8-d1d57b4f5dfb',
+        password="AuRjEkVRr1oK",
+        url='https://gateway.watsonplatform.net/conversation/api',
+        version='2017-04-21')
 
-    def play(songnme,ren=" Official Audio "):
-        songnme=songnme+ren
-        songss=songnme.split()
-        base_url="https://www.youtube.com/results?search_query="+'+'.join(songss)
-        url="https://www.youtube.com"
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-        html=urllib.request.urlopen(base_url).read()
-        temp=html.decode()
-        soup=BeautifulSoup(temp,"html.parser")
-        list1=soup.find_all('a')
-        j=0
-        urllist=[]
-        for i in list1:
-            temp=i["href"]
-            temp1=temp.split('?')
-            if("/watch" in temp1[0]):
-                newurl=url+temp
-                ydl_opts = {
-                'format': 'bestaudio/best',
-                'postprocessors': [{
-                                    'key': 'FFmpegExtractAudio',
-                                    'preferredcodec': 'mp3',
-                                    'preferredquality': '192',
-                                    }],
-                                    'quiet': True,
-                                    'restrictfilenames': True,
-                                    'prefer_insecure':True
-                                    }
+    workspace_id="ddab1874-15b1-4c06-9b1a-5083e6c364cd"
+    context={}
 
-                ydl = youtube_dl.YoutubeDL(ydl_opts)
-
-                temp=ydl.extract_info(newurl,download=False)
-                try:
-                    fh=urlopen(temp["url"])
-                    break
-                except Exception as e:
-                    pass
-        return [temp["url"],temp['title']]
-
-
+    response = conversation.message(workspace_id=workspace_id, input={
+        'text': text},context=context)
     entities=response["entities"]
     intents=response["intents"]
-    jsoncontent={"response":"","charts":{"name":"","type":"","list":""},"watch":"","audiosrc":"","albumart":"","name":""}
-    respnce=""
-    def setjson(response,chartname,charttype,list1,watch,audiosrc,albumart1,name):
-        jsoncontent["response"]=response
-        jsoncontent["charts"]["name"]=chartname
-        jsoncontent["charts"]["type"]=charttype
-        jsoncontent["charts"]["list"]=list1
-        jsoncontent["embed"]=watch
-        jsoncontent["audiosrc"]=audiosrc
-        jsoncontent["albumart"]=albumart1
-        jsoncontent["name"]=name
-        return
-    try:
-        if('spotify' in intents[0]['intent'].lower()):
-            responce=response["output"]['text'][0]+'\n'
-            #types-top,viral
-            entitylist=[]
-            type1=""
-            for i in entities:
-                entitylist.append(i['entity'].lower())
-            if('daily' and 'viral' in entitylist):
-                respnce+=getspotify('daily viral')
-                type1="daily viral"
-            elif('daily' and 'top' in entitylist):
-                respnce+=getspotify('daily top')
-                type1="daily top"
-            elif('top' in entitylist):
-                respnce+=getspotify('top weekly')
-                type1="top weekly"
-            elif('viral' in entitylist):
-                respnce+=getspotify('top viral')
-                type1="top viral"
-            else:
-                pass
-            setjson(responce,"spotify",type1,respnce,"","","","")
 
-        elif('gaana' in intents[0]['intent'].lower()):
-            entitylist=[]
-            type1=""
-            responce=response["output"]['text'][0]+'\n'
-            for i in entities:
-                entitylist.append(i['entity'].lower())
-
-            if('top' and 'bollywood' in entitylist):
-                respnce+=gaana_name('bollywood top')
-                type1="bollywood top"
-            elif('top' in entitylist or 'hot' and 'bollywood' in entitylist or 'hot' in entitylist):
-                respnce+=gaana_name('hot bollywood')
-                type1="hot bollywood"
-            elif('trending' in entitylist):
-                respnce+=gaana_name('trending')
-                type1="trending"
-            elif('international' in entitylist):
-               respnce+= gaana_name('international')
-               type1="international"
-            else:
-                pass
-            setjson(responce,"gaana",type1,respnce,"","","","")
-
-        elif('at40' in intents[0]['intent'].lower()):
-            entitylist=[]
-            type1=""
-            responce=response["output"]['text'][0]+'\n'
-            for i in entities:
-                entitylist.append(i['entity'].lower())
-
-            if('hot' in entitylist):
-               respnce+= at_40('hot')
-               type1="hot"
-            elif('top' in entitylist):
-               respnce+= at_40('top')
-               type1="hot"
-            else:
-                pass
-            setjson(responce,"at40",type1,respnce,"","","","")
-        elif('stream' in intents[0]['intent'].lower()):
-            responce=response["output"]['text'][0]+'\n'
-            res=stream(response["input"]["text"])
-            songname1=res[0]
-            names=res[1]
-            setjson(responce,"","","",songname1,"","",names)
-        elif('play-song' in intents[0]['intent'].lower()):
-            respnce=response["output"]['text'][0]+'\n'
-            res=play(response["input"]["text"])
-            songname1=res[0]
-            names=res[1]
-            albumart1=albumart(names)
-            setjson(respnce,"","","","",songname1,albumart1,names)
+    if('spotify' in intents[0]['intent'].lower()):
+        songmetadata.response=response["output"]['text'][0]+'\n'
+        #types-top,viral
+        entitylist=[]
+        type1=""
+        for i in entities:
+            entitylist.append(i['entity'].lower())
+        if('daily' in entitylist and 'viral' in entitylist):
+            songmetadata.getspotify('daily viral')
+        elif('daily' in entitylist and 'top' in entitylist):
+            songmetadata.getspotify('top daily')
+        elif('top' in entitylist):
+            songmetadata.getspotify('top weekly')
+        elif('viral' in entitylist):
+            songmetadata.getspotify("top viral")
         else:
-            setjson(response["output"]['text'][0]+'\n',"","","","","","","")
-    except Exception as e:
-        respnce=response["output"]['text'][0]+'\n'
-        setjson(respnce,"","","","","","","")
-    return jsoncontent
+
+            pass
+
+    elif('gaana' in intents[0]['intent'].lower()):
+        entitylist=[]
+        type1=""
+        songmetadata.response=response["output"]['text'][0]+'\n'
+        for i in entities:
+            entitylist.append(i['entity'].lower())
+
+        if('top' in entitylist and 'bollywood' in entitylist):
+            songmetadata.gaana_name('bollywood top')
+        elif('top' in entitylist or 'hot' and 'bollywood' in entitylist or 'hot' in entitylist):
+            songmetadata.gaana_name('hot bollywood')
+        elif('trending' in entitylist):
+            songmetadata.gaana_name('trending')
+        elif('international' in entitylist):
+            songmetadata.gaana_name('international')
+        else:
+            pass
+
+    elif('at40' in intents[0]['intent'].lower()):
+        entitylist=[]
+        type1=""
+        songmetadata.response=response["output"]['text'][0]+'\n'
+        for i in entities:
+            entitylist.append(i['entity'].lower())
+
+        if('hot' in entitylist):
+            songmetadata.getAt40('hot')
+        elif('top' in entitylist):
+            songmetadata.getAt40('top')
+        else:
+            pass
+    elif('stream' in intents[0]['intent'].lower()):
+        songmetadata.response=response["output"]['text'][0]+'\n'
+        songmetadata.getYoutube(response["input"]["text"])
+    elif('play-song' in intents[0]['intent'].lower()):
+        songmetadata.response=response["output"]['text'][0]+'\n'
+        songmetadata.getYoutube(response["input"]["text"])
+        songmetadata.albumart(songmetadata.title)
+    elif('download' in intents[0]['intent'].lower()):
+        songmetadata.response=response["output"]['text'][0]+'\n'
+        songmetadata.getDownloads(response["input"]["text"])
+
+    else:
+        songmetadata.response=response["output"]['text'][0]+'\n'
+
+    return songmetadata.getJSON()
+
+
 
 @app.route('/')
 def home():
@@ -388,6 +371,17 @@ def home():
 
 @app.route('/input',methods=['POST'])
 def mainconversation():
+    songmetadata.__init__()
     actual_text=request.get_json()
     jsoncontent=controller(actual_text["input"])
     return jsonify(jsoncontent)
+
+@app.route('/stream',methods=['POST'])
+def audiostreamer():
+    jason=request.get_json()
+    url=jason["src"]
+    fhand=urlopen(url)
+    def generate():
+        for data in fhand:
+            yield data
+    return Response(generate(), mimetype="audio/x-wav")
