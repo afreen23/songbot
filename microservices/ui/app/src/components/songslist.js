@@ -60,7 +60,7 @@ class SongList extends React.Component {
   }
   //fetching song list
     componentWillMount() {
-    var data;
+    var data = [];
     var recievedPropObject = this.props.charts;
     var chartsAsString = recievedPropObject["list"];
     var chartsAsArray = chartsAsString.split("<br/>");//storing charts in an array of strings
