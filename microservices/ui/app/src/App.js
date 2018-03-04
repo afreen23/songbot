@@ -143,60 +143,38 @@ handleSubmit(e) {
   });
 }
 
-// handleUpdate(values) {
-//         const { top } = values;
-//         this.setState({ top });
-//     }
+renderThumb({ style, ...props }) {
+  //const { top } = this.state;
+  const thumbStyle = {
+      backgroundColor: 'grey'
+  };
+  return (
+      <div
+          style={{ ...style, ...thumbStyle }}
+          {...props}/>
+  );
+}
 
-//     renderView({ style, ...props }) {
-//         const { top } = this.state;
-//         const viewStyle = {
-//             padding: 15,
-//             //backgroundColor: '#38394D',
-//             color: `rgb(${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))})`
-//         };
-//         return (
-//             <div
-//                 className="box"
-//                 style={{ ...style, ...viewStyle }}
-//                 {...props}/>
-//         );
-//     }
-
-    renderThumb({ style, ...props }) {
-        //const { top } = this.state;
-        const thumbStyle = {
-            backgroundColor: 'grey'
-        };
-        return (
-            <div
-                style={{ ...style, ...thumbStyle }}
-                {...props}/>
-        );
-    }
-  render() {
-    const {classes}= this.props;
-    return (
-
-     <Grid container className={classes.container} direction='column' justify='space-between'>
-       <Grid item xs={12} style={{padding: '20px 0px 0px 20px'}} className={classes.grid1}>
-       <Scrollbars
-        ref="scrollbars"
-        renderThumbHorizontal={this.renderThumb}
-        renderThumbVertical={this.renderThumb}
-        {...this.props}>
-       {this.state.chatHistory.map((chats,index) =>
-          (chats.type==='user'?
-          <UserMessage key={index}  message={chats.message}/> :
-          (chats.loading ? <Loading key={index}/> : <ChatBotMessage mtype={chats.mtype} data={chats.data} message={chats.message}  key={index}/>)))}
-       </Scrollbars>
-       </Grid>
-       <Grid item xs={12}  className={classes.grid2}>
-        <Input onSubmit={this.handleSubmit}/>
-      </Grid>
+ render() {
+  const {classes}= this.props;
+  return (
+   <Grid container className={classes.container} direction='column' justify='space-between'>
+     <Grid item xs={12} style={{padding: '20px 0px 0px 20px'}} className={classes.grid1}>
+     <Scrollbars
+      ref="scrollbars"
+      renderThumbHorizontal={this.renderThumb}
+      renderThumbVertical={this.renderThumb}
+     >
+     {this.state.chatHistory.map((chats,index) =>
+        (chats.type==='user'?
+        <UserMessage key={index}  message={chats.message}/> :
+        (chats.loading ? <Loading key={index}/> : <ChatBotMessage mtype={chats.mtype} data={chats.data} message={chats.message}  key={index}/>)))}
+     </Scrollbars>
+     </Grid>
+     <Grid item xs={12}  className={classes.grid2}>
+      <Input onSubmit={this.handleSubmit}/>
     </Grid>
-
-    );
+  </Grid>);
   }
 }
 
