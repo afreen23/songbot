@@ -4,6 +4,7 @@ import Play from './playsong';
 import Video from './playvideo';
 import TopCharts from './charts.js';
 import SongsList from './songslist';
+import Download from './download';
 
 class ChatBotMessage extends React.Component {
 constructor(props){
@@ -32,6 +33,7 @@ render() {
                 { type === 'charts' && <SongsList charts={this.props.data}/>}
                 { type === 'audio' && <Play song={this.props.data}/>}
                 { type === 'video' && <Video src={this.props.data}/>}
+                { type === 'download' && <Download src={this.props.data}/>}
                 </div>
               </div>
         </div>

@@ -8,7 +8,6 @@ import { withStyles } from 'material-ui/styles'
 import Loading from './components/loading';
 import { Scrollbars } from 'react-custom-scrollbars';
 
-
 const styles=theme=>({
   grid1: {
     flexBasis: "90%",
@@ -48,7 +47,7 @@ constructor(props){
   }
 //fetching bot's greeting message
 componentDidMount() {
- fetch('https://app.boorish86.hasura-app.io/input', {
+ fetch('https://app.aesthete80.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
       input: 'hi'
@@ -115,17 +114,18 @@ handleSubmit(e) {
       type= "charts";
       supportingData =charts;
     }
-    else if(watch !== ""){
-      type= "video";
-      supportingData = watch;
-    }
     else if(download !== ""){
       type= "download";
       supportingData = download;
     }
+    else if(watch !== ""){
+      type= "video";
+      supportingData = watch;
+    }
     else {
       supportingData ="";
     }
+    console.log(type)
     ms = data.response;
     currentHistory.pop();
     obj= { type: 'bot', message: ms, mtype: type, data: supportingData , loading: false}
