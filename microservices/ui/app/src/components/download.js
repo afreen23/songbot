@@ -10,7 +10,10 @@ const styles = theme => ({
 	  borderRadius: '5px',
 	  '&:hover': {
 	  	backgroundColor: '#d8c0ff4d'
-	  }
+	  },
+	  width: '156px',
+	  fontSize: '18px',
+	  padding: '8px 16px'
 	}
 });
 
