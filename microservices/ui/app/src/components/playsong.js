@@ -11,7 +11,6 @@ const styles=theme=>({
      root: {
       width: 400,
       height: 400,
-      fontSize: 'xx-large',
       overflow: 'hidden',
       position: 'relative',
       filter:'drop-shadow(8px 8px 10px #232222)',
@@ -41,6 +40,10 @@ const styles=theme=>({
       height: 150, 
       color: '#ffffffbf',
       // border: '1px solid red'
+     },
+     albumart: {
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
      }
 });
 
@@ -91,9 +94,9 @@ class Play extends React.Component {
  
   <div style={{marginTop: "10px"}} className={classes.root}>
      <div style={{width: 400, height: 400}} >
-            <img alt="album art" src={this.props.song["albumart"]}  />
+            <img alt="album art" className={classes.albumart} src={this.props.song["albumart"]}  />
             <div className={classes.divi}>
-              <Typography variant='headline' style={{marginTop: 50, color: '#ffffffe3'}}>{this.props.song["name"]}</Typography>
+              <Typography  variant='headline' style={{marginTop: 10, color: '#ffffffe3', fontSize: '1.5rem'}}>{this.props.song["name"]}</Typography>
               <div><ButtonBase  disableRipple className={classes.button} onClick={()=>this.handleClick(this.props.song)}>
                 {(value === 0) && <Pause className={classes.playPause}/>}
                 {(value === 1) && <PlayArrowIcon className={classes.playPause}/>}
