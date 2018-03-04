@@ -54,11 +54,6 @@ class SongList extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      value: '',
-      selected: false,
-      playing: false,
-      currentid: '',
-      currentaudio: new Audio(),
       rowsPerPage: 5,
       page: 0
     };
