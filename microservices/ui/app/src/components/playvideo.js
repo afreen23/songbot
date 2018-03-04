@@ -5,13 +5,13 @@ const styles= theme => ({
 	root:{
 		marginTop: "10px",
 		width: '100%',
+		filter:'drop-shadow(8px 8px 10px #232222)'
 		// border: '1px solid white'
 	}
 });
 
 const Video = (props) => {
 	const {classes , src} =props;
-	const url = src;
 	return (
 			<div className={classes.root}>
 				<iframe 

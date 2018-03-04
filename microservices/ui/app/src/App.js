@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import { createMuiTheme , MuiThemeProvider } from 'material-ui/styles';
 import ChatBotMessage from './components/chatbotmessage';
 import UserMessage from './components/usermessage';
 import Grid from 'material-ui/Grid';
@@ -45,13 +44,11 @@ constructor(props){
       loading: true
     }
     this.handleSubmit=this.handleSubmit.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
-        this.renderView = this.renderView.bind(this);
-        this.renderThumb = this.renderThumb.bind(this);
+    this.renderThumb = this.renderThumb.bind(this);
   }
 //fetching bot's greeting message
 componentDidMount() {
- fetch('https://app.aesthete80.hasura-app.io/input', {
+ fetch('https://app.boorish86.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
       input: 'hi'
@@ -66,8 +63,10 @@ componentDidMount() {
     let obj= [{ type: 'bot', message: ms, mtype: 'text', data: {},loading: false}]
     this.setState({chatHistory: obj});
   })
-  .catch(function(error) {
+  .catch((error) => {
     console.log('Fetch Error :-S', error);
+    let obj= [{ type: 'bot', message: 'Network Error! Try again!', mtype: 'text', data: {},loading: false}]
+    this.setState({chatHistory: obj});
   });
 }
 //rendering and sending user input
@@ -85,7 +84,7 @@ handleSubmit(e) {
 
   promise.then(()=> this.refs.scrollbars.scrollToBottom())
    //for sending reply
-   fetch('https://app.aesthete80.hasura-app.io/input', {
+   fetch('https://app.boorish86.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
       input: e
@@ -96,8 +95,9 @@ handleSubmit(e) {
   })
   .then(response => response.json())
   .then(data => {
+    console.log(data);
     //storing data
-    let audio,charts,watch,ms,obj,type='',supportingData;
+    let audio,charts,watch,ms,download,obj,type='',supportingData;
       audio = {
         audiosrc:data.audiosrc,
         albumart:data.albumart,
@@ -105,22 +105,26 @@ handleSubmit(e) {
       };
       charts = data.charts;
       watch = data.embed;
+      download = data.download;
       //checking which type of data received
-    if(audio['audiosrc'] !== '')
-      type = 'audio'
-    if(charts["list"] !== '')
-      type= "charts"
-    if(watch !== "")
-      type= "video"
-    //now storing that type data value
-    switch(type) {
-      case 'audio' : supportingData = audio;
-      break;
-      case 'charts': supportingData = charts;
-      break;
-      case 'video' : supportingData = watch;
-      break;
-      default: supportingData = "";
+    if(audio['audiosrc'] !== '') {
+      type = 'audio';
+      supportingData =audio;
+    }
+    else if(charts["list"] !== '') {
+      type= "charts";
+      supportingData =charts;
+    }
+    else if(watch !== ""){
+      type= "video";
+      supportingData = watch;
+    }
+    else if(download !== ""){
+      type= "download";
+      supportingData = download;
+    }
+    else {
+      supportingData ="";
     }
     ms = data.response;
     currentHistory.pop();
@@ -129,30 +133,35 @@ handleSubmit(e) {
     this.setState({chatHistory: currentHistory});
     this.refs.scrollbars.scrollToBottom();
   })
-  .catch(function(error) {
+  .catch((error) => {
     console.log('Fetch Error :-S', error);
+    currentHistory.pop();
+    let obj= [{ type: 'bot', message: 'Network Error! Try again!', mtype: 'text', data: {},loading: false}]
+    currentHistory =currentHistory.concat(obj);
+    this.setState({chatHistory: currentHistory});
+    this.refs.scrollbars.scrollToBottom();
   });
 }
 
-handleUpdate(values) {
-        const { top } = values;
-        this.setState({ top });
-    }
+// handleUpdate(values) {
+//         const { top } = values;
+//         this.setState({ top });
+//     }
 
-    renderView({ style, ...props }) {
-        const { top } = this.state;
-        const viewStyle = {
-            padding: 15,
-            //backgroundColor: '#38394D',
-            color: `rgb(${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))})`
-        };
-        return (
-            <div
-                className="box"
-                style={{ ...style, ...viewStyle }}
-                {...props}/>
-        );
-    }
+//     renderView({ style, ...props }) {
+//         const { top } = this.state;
+//         const viewStyle = {
+//             padding: 15,
+//             //backgroundColor: '#38394D',
+//             color: `rgb(${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))})`
+//         };
+//         return (
+//             <div
+//                 className="box"
+//                 style={{ ...style, ...viewStyle }}
+//                 {...props}/>
+//         );
+//     }
 
     renderThumb({ style, ...props }) {
         //const { top } = this.state;
@@ -173,10 +182,8 @@ handleUpdate(values) {
        <Grid item xs={12} style={{padding: '20px 0px 0px 20px'}} className={classes.grid1}>
        <Scrollbars
         ref="scrollbars"
-        renderView={this.renderView}
         renderThumbHorizontal={this.renderThumb}
         renderThumbVertical={this.renderThumb}
-        onUpdate={this.handleUpdate}
         {...this.props}>
        {this.state.chatHistory.map((chats,index) =>
           (chats.type==='user'?

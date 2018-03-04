@@ -1,11 +1,11 @@
-  import React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import IconButton from 'material-ui/IconButton';
+import ButtonBase from 'material-ui/ButtonBase';
 import Typography from 'material-ui/Typography';
 import PlayArrowIcon from 'material-ui-icons/PlayArrow';
-import GridList, { GridListTile } from 'material-ui/GridList';
 import Pause from 'material-ui-icons/Pause';
+import Replay from 'material-ui-icons/Replay';
 
 const styles=theme=>({
      root: {
@@ -14,8 +14,8 @@ const styles=theme=>({
       fontSize: 'xx-large',
       overflow: 'hidden',
       position: 'relative',
-   
-      //border: '1px solid white',
+      filter:'drop-shadow(8px 8px 10px #232222)',
+      // border: '1px solid white',
       
      },
      divi: {
@@ -28,10 +28,19 @@ const styles=theme=>({
         textAlign: 'center',
         background: 'rgba(0, 0, 0, 0.4)',
         //transform: 'translate(-50%, -50%)',
-        //border: '1px solid red'
+        // border: '1px solid red'
      },
      button: {
-      marginTop: 80
+      marginTop: 80,
+      // border: '1px solid white',
+      padding: 0
+     },
+     playPause: {
+      padding: 0,
+      width: 125, 
+      height: 150, 
+      color: '#ffffffbf',
+      // border: '1px solid red'
      }
 });
 
@@ -41,48 +50,60 @@ class Play extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      first: false,
-      isPlaying: false,
+      first: true,
+      value: 1,
       currentSong: new Audio()
     };
     this.handleClick=this.handleClick.bind(this);
   }
+
   handleClick(audio) {
-    let { isPlaying } = this.state;
-     if(!this.state.first) {
-      this.state.currentSong.src = audio;
+     // document.body.style.background = `url(${audio['albumart']}) no-repeat fixed center`;
+     let { value } = this.state;
+     if(this.state.first) {
+      var song = this.state.currentSong;
+      song.src = audio['audiosrc'];
+      song.addEventListener('ended' , () => {
+        this.setState({value: 2});//2: Replay
+        console.log('ended');
+      })
+      this.setState({value:0,first: false,currentSong: song});//0:pause
       this.state.currentSong.play();
-      this.setState({isPlaying: true,first: true});
       return;
      }
-     if(isPlaying) {
+     else if(value === 0) {
       this.state.currentSong.pause();
-      this.setState({isPlaying: false}) 
+      this.setState({value: 1}) 
+     }
+     else if(value === 2) {//2: Replay
+      this.state.currentSong.play();
+      this.setState({value: 0});
      }
      else {
        this.state.currentSong.play();
-       this.setState({isPlaying: true})
+       this.setState({value: 0})
      }
   }
   render() {
   const { classes} = this.props;
-
+  let {value} = this.state;
   return (
-  <GridList style={{marginTop: "10px"}} className={classes.root}>
-     <GridListTile style={{width: 400, height: 400}} >
+ 
+  <div style={{marginTop: "10px"}} className={classes.root}>
+     <div style={{width: 400, height: 400}} >
             <img alt="album art" src={this.props.song["albumart"]}  />
             <div className={classes.divi}>
               <Typography variant='headline' style={{marginTop: 50, color: '#ffffffe3'}}>{this.props.song["name"]}</Typography>
-              <IconButton className={classes.button} onClick={()=>this.handleClick(this.props.song["audiosrc"])}>
-                {this.state.isPlaying?
-                 <Pause style={{width: 125, height: 150, color: '#ffffffbf'}}/>:
-                 <PlayArrowIcon style={{width: 150, height: 150, color: '#ffffffbf'}}/>
-               }
-              </IconButton>
+              <div><ButtonBase  disableRipple className={classes.button} onClick={()=>this.handleClick(this.props.song)}>
+                {(value === 0) && <Pause className={classes.playPause}/>}
+                {(value === 1) && <PlayArrowIcon className={classes.playPause}/>}
+                {(value === 2) && <Replay className={classes.playPause}/>}
+              </ButtonBase></div>
+             {/* <input type="range" id="seek" value="0" max=""/>*/}
             </div>
             
-          </GridListTile>
-   </GridList>
+          </div>
+   </div>
 
   );
 }
@@ -94,10 +115,3 @@ Play.propTypes = {
 };
 
 export default withStyles(styles, { withTheme: true })(Play);
-/*
- <CardMedia
-          className={classes.cover}
-          image="images/thunder.jpeg"
-          title="Live from space album cover"
-        />
-*/

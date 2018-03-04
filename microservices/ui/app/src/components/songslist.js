@@ -9,9 +9,7 @@ import Table, {
   TableRow,
 } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
-import PlayArrow from 'material-ui-icons/PlayArrow';
-import Pause from 'material-ui-icons/Pause';
+
 
 const styles=theme => ({
   root: {
@@ -19,6 +17,7 @@ const styles=theme => ({
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
     // color: theme.palette.background.paper,
+    filter:'drop-shadow(8px 8px 10px #232222)',
     background: 'rgba(0, 0, 0, 0.4)',
     width: 500,
   },
@@ -69,7 +68,6 @@ class SongList extends React.Component {
     var data = this.props.charts;
     var list = data["list"];
     var songsArray = list.split("<br/>");
-    var data =[];
     songsArray.forEach((item) => {
       data=data.concat(createData(item))
     })
