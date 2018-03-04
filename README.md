@@ -8,6 +8,7 @@ A bot built with **[Watson Conversation Api](https://www.ibm.com/watson/develope
 * Plays songs as audio
 * Watch videos of songs 
 * Lists top charts 
+* Downlaod Songs 
 
 ## Usage Examples
 

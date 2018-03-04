@@ -1,5 +1,6 @@
 flask
 requests
+ffprobe
 ffmpeg-normalize
 gunicorn
 watson-developer-cloud
