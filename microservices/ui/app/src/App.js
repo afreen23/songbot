@@ -94,7 +94,6 @@ handleSubmit(e) {
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data);
     //storing data
     let audio,charts,watch,ms,download,obj,type='',supportingData;
       audio = {
@@ -125,7 +124,7 @@ handleSubmit(e) {
     else {
       supportingData ="";
     }
-    console.log(type)
+    // console.log(type)
     ms = data.response;
     currentHistory.pop();
     obj= { type: 'bot', message: ms, mtype: type, data: supportingData , loading: false}
