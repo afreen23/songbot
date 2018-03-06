@@ -189,5 +189,5 @@ Your app will be live on `localhost`
 
 Boilerplate Hasura project with [Flask](http://flask.pocoo.org/) microservice.
 
-#Contributing:
+## Contributing:
 We `encourage` you to find bugs and take up issues and start solving to make this a better app which everyone can use.
