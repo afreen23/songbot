@@ -353,7 +353,7 @@ def controller(text):
     elif('stream' in intents[0]['intent'].lower()):
         print("stream",file=sys.stderr)
         songmetadata.response=response["output"]['text'][0]+'\n'
-        songmetadata.stream(response["src"]["text"])
+        songmetadata.stream(response["input"]["text"])
     elif('play-song' in intents[0]['intent'].lower()):
 
         songmetadata.response=response["output"]['text'][0]+'\n'
