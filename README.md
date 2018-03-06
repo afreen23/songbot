@@ -8,11 +8,12 @@ A bot built with **[Watson Conversation Api](https://www.ibm.com/watson/develope
 * Plays songs as audio
 * Watch videos of songs 
 * Lists top charts 
-* Downlaod Songs 
+* Download Songs 
 
 ## Usage Examples
 
-* Type ```play songname``` for listening any song
+* Type ```play songname``` or any other equivalent natural language for listening any song
+* Type  ```download songname```  to download any song or any other equivalent natural language 
 * Type ```watch songname``` for watching youtube video for the song
 * Type charts name for displaying charts 
   #### Example
@@ -187,3 +188,6 @@ Your app will be live on `localhost`
 
 
 Boilerplate Hasura project with [Flask](http://flask.pocoo.org/) microservice.
+
+## Contributing:
+We `encourage` you to find bugs and take up issues and start solving to make this a better app which everyone can use.
