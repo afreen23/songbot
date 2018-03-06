@@ -9,9 +9,7 @@ import Table, {
   TableRow,
 } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
-import PlayArrow from 'material-ui-icons/PlayArrow';
-import Pause from 'material-ui-icons/Pause';
+
 
 const styles=theme => ({
   root: {
@@ -19,6 +17,7 @@ const styles=theme => ({
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
     // color: theme.palette.background.paper,
+    filter:'drop-shadow(8px 8px 10px #232222)',
     background: 'rgba(0, 0, 0, 0.4)',
     width: 500,
   },
@@ -55,22 +54,18 @@ class SongList extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      value: '',
-      selected: false,
-      playing: false,
-      currentid: '',
-      currentaudio: new Audio(),
       rowsPerPage: 5,
       page: 0
     };
   }
   //fetching song list
     componentWillMount() {
-    var data = this.props.charts;
-    var list = data["list"];
-    var songsArray = list.split("<br/>");
-    var data =[];
-    songsArray.forEach((item) => {
+    var data = [];
+    var recievedPropObject = this.props.charts;
+    var chartsAsString = recievedPropObject["list"];
+    var chartsAsArray = chartsAsString.split("<br/>");//storing charts in an array of strings
+    chartsAsArray.pop();//removing empty string
+    chartsAsArray.forEach((item) => {
       data=data.concat(createData(item))
     })
     this.setState({charts: data});
