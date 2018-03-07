@@ -14,7 +14,6 @@ import urllib.request, urllib.parse,urllib.error
 
 
 
-
 spotify_endpoints={}
 spotify_endpoints["daily viral"]="https://spotifycharts.com/viral/"
 spotify_endpoints["weekly viral"]="https://spotifycharts.com/viral/global/weekly/latest"
@@ -181,11 +180,12 @@ class Song(object):
         self.chartlist=res
         self.charttype=name
         return
-    def albumart(self,songname):
+    def Albumart(self,songname):
         spotifyfinal=""
         itunesfinal=""
         spotifyalbumart=""
         finalurl=""
+        print(songname,file=sys.stderr)
         try:
             songname2=songname+" official itunes  "
             url="https://www.google.co.in/search?q="+urllib.request.quote(songname2)+"&source=lnms&tbm=isch"
@@ -265,6 +265,9 @@ class Song(object):
         print(NewUrlMp3,file=sys.stderr)
         return
 
+    def stream(self,song):
+        self.getYoutube(song)
+        self.audiosrc=""
 
     def getJSON(self):
         result={"response":self.response,
@@ -348,15 +351,22 @@ def controller(text):
         else:
             pass
     elif('stream' in intents[0]['intent'].lower()):
+        print("stream",file=sys.stderr)
         songmetadata.response=response["output"]['text'][0]+'\n'
-        songmetadata.getYoutube(response["input"]["text"])
+        songmetadata.stream(response["input"]["text"])
     elif('play-song' in intents[0]['intent'].lower()):
+
         songmetadata.response=response["output"]['text'][0]+'\n'
         songmetadata.getYoutube(response["input"]["text"])
-        songmetadata.albumart(songmetadata.title)
+        print(songmetadata.title,file=sys.stderr)
+        songmetadata.Albumart(songmetadata.title)
+        songmetadata.ytd=""
+
     elif('download' in intents[0]['intent'].lower()):
         songmetadata.response=response["output"]['text'][0]+'\n'
         songmetadata.getDownloads(response["input"]["text"])
+        songmetadata.ytd=""
+        songmetadata.audiosrc=""
 
     else:
         songmetadata.response=response["output"]['text'][0]+'\n'
