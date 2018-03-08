@@ -40,14 +40,15 @@ constructor(props){
     super(props)
     this.state = {
       chatHistory: [{type: 'bot' , loading: true}],
-      loading: true
+      url: '',
     }
+    this.handleScroll=this.handleScroll.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
     this.renderThumb = this.renderThumb.bind(this);
   }
 //fetching bot's greeting message
 componentDidMount() {
- fetch('https://app.aesthete80.hasura-app.io/input', {
+ fetch('https://app.boorish86.hasura-app.io/input', {
     method: 'POST',
     body: JSON.stringify({
       input: 'hi'
@@ -68,7 +69,7 @@ componentDidMount() {
     this.setState({chatHistory: obj});
   });
 }
-//rendering and sending user input
+// rendering and sending user input
 handleSubmit(e) {
   var currentHistory;
   //for updating ui
@@ -94,6 +95,7 @@ handleSubmit(e) {
   })
   .then(response => response.json())
   .then(data => {
+    console.log(data);
     //storing data
     let audio,charts,watch,ms,download,obj,type='',supportingData;
       audio = {
@@ -102,7 +104,7 @@ handleSubmit(e) {
         name: data.name
       };
       charts = data.charts;
-      watch = data.embed;
+      watch = data.watch;
       download = data.download;
       //checking which type of data received
     if(audio['audiosrc'] !== '') {
@@ -124,12 +126,17 @@ handleSubmit(e) {
     else {
       supportingData ="";
     }
-    // console.log(type)
+    var url =this.state.url;
     ms = data.response;
     currentHistory.pop();
     obj= { type: 'bot', message: ms, mtype: type, data: supportingData , loading: false}
     currentHistory =currentHistory.concat(obj);
-    this.setState({chatHistory: currentHistory});
+    if(type === 'audio') {
+      url = audio['albumart'];
+      var string =`background: linear-gradient(45deg, rgba(139,136,120,0.9) 50%, rgba(0,0,0,0.9)), url(${url});`
+      document.body.setAttribute('style', string);
+    }
+    this.setState({chatHistory: currentHistory, url: url});
     this.refs.scrollbars.scrollToBottom();
   })
   .catch((error) => {
@@ -139,6 +146,7 @@ handleSubmit(e) {
     currentHistory =currentHistory.concat(obj);
     this.setState({chatHistory: currentHistory});
     this.refs.scrollbars.scrollToBottom();
+
   });
 }
 
@@ -154,6 +162,29 @@ renderThumb({ style, ...props }) {
   );
 }
 
+handleScroll(values) {
+  var { top, scrollHeight } = values;
+  var {url} = this.state;
+  var string;
+  if(url === '') {
+     url = 'magenta-guitar-neck630.jpg'; 
+    }
+  var array =[
+  `background: linear-gradient(45deg, rgba(255,182,193,0.9) 50%, rgba(0,0,0,0.7)), url(${url});`,
+  `background: linear-gradient(45deg, rgba(0,255,255,0.9) 50%, rgba(0,0,0,0.7)), url(${url});`,
+  `background: linear-gradient(45deg, rgba(139,136,120,0.9) 50%, rgba(0,0,0,0.7)), url(${url});`,
+  // `background: linear-gradient(160deg, rgba(100,0,0,1) 50%, rgba(0,0,0,0.32)), url(${url});`
+  ];
+  top= top*scrollHeight;
+  var checkpoint = scrollHeight/4;
+ if(top>=0 && top<=checkpoint)
+    document.body.setAttribute("style" , array[0]);
+ else if(top>=checkpoint && top<= 2*checkpoint)
+     document.body.setAttribute("style" , array[1]);
+ else 
+     document.body.setAttribute("style" , array[2]);
+}
+
  render() {
   const {classes}= this.props;
   return (
@@ -163,11 +194,15 @@ renderThumb({ style, ...props }) {
       ref="scrollbars"
       renderThumbHorizontal={this.renderThumb}
       renderThumbVertical={this.renderThumb}
+      onScrollFrame={this.handleScroll}
      >
-     {this.state.chatHistory.map((chats,index) =>
+     
+
+{this.state.chatHistory.map((chats,index) =>
         (chats.type==='user'?
         <UserMessage key={index}  message={chats.message}/> :
-        (chats.loading ? <Loading key={index}/> : <ChatBotMessage mtype={chats.mtype} data={chats.data} message={chats.message}  key={index}/>)))}
+        (chats.loading ? <Loading key={index}/> : <ChatBotMessage index={index} mtype={chats.mtype} data={chats.data} message={chats.message}  key={index}/>)))}
+
      </Scrollbars>
      </Grid>
      <Grid item xs={12}  className={classes.grid2}>
@@ -178,5 +213,4 @@ renderThumb({ style, ...props }) {
 }
 
 export default withStyles(styles)(Chat);
-
 

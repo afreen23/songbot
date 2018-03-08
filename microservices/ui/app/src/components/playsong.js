@@ -47,8 +47,6 @@ const styles=theme=>({
      }
 });
 
-
-
 class Play extends React.Component {
   constructor(props) {
     super(props);
@@ -94,7 +92,7 @@ class Play extends React.Component {
  
   <div style={{marginTop: "10px"}} className={classes.root}>
      <div style={{width: 400, height: 400}} >
-            <img alt="album art" className={classes.albumart} src={this.props.song["albumart"]}  />
+            <img style={{width: 400, height: 400}} alt="album art" className={classes.albumart} src='309591848.jpg'  />
             <div className={classes.divi}>
               <Typography  variant='headline' style={{marginTop: 10, color: '#ffffffe3', fontSize: '1.5rem'}}>{this.props.song["name"]}</Typography>
               <div><ButtonBase  disableRipple className={classes.button} onClick={()=>this.handleClick(this.props.song)}>
