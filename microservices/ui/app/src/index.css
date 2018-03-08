@@ -19,7 +19,7 @@ background: -o-linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%,
 background: -ms-linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%); /* ie10+ */
 background: linear-gradient(45deg, rgba(0,0,128,1) 0%, rgba(0,128,128,1) 93%, rgba(0,128,128,1) 100%); /* w3c */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008080', endColorstr='#000080',GradientType=1 ); /* ie6-9 */
-  background: linear-gradient(45deg, rgba(139,136,120,0.9) 50%, rgba(0,0,0,0.9)), url('magenta-guitar-neck630.jpg');
+  background: linear-gradient(160deg, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.23)), url('magenta-guitar-neck630.jpg');
 
  /* */
   background-blend-mode: multiply !important;

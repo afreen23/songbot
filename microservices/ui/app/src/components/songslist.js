@@ -13,10 +13,8 @@ import Paper from 'material-ui/Paper';
 
 const styles=theme => ({
   root: {
-    // width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
-    // color: theme.palette.background.paper,
     filter:'drop-shadow(8px 8px 10px #232222)',
     background: 'rgba(0, 0, 0, 0.4)',
     width: 500,
@@ -31,7 +29,6 @@ const styles=theme => ({
   cell: {
    color: theme.palette.background.paper,
      fontSize: 15,
-    // textColor:'white'
   },
   head: {
     color: '#fff',

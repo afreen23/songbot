@@ -6,7 +6,6 @@ const styles= theme => ({
 		marginTop: "10px",
 		width: '100%',
 		filter:'drop-shadow(8px 8px 10px #232222)'
-		// border: '1px solid white'
 	}
 });
 
@@ -16,10 +15,9 @@ const Video = (props) => {
 			<div className={classes.root}>
 				<iframe 
 					title="youtube video player"
-					//type="text/html" 
 				    width="100%" 
 				    height="385" 
-				    src={props.src}
+				    src={src}
 				    frameBorder="0"
 				    allowFullScreen
 				    >
@@ -29,5 +27,3 @@ const Video = (props) => {
 };
 
 export default withStyles(styles)(Video);
-
-////<iframe width="420" height="315" src="https://www.youtube.com/watch?v=kXYiU_JCYtU" frameBorder="0" allowFullScreen></iframe>}
