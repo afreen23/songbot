@@ -293,10 +293,9 @@ def controller(text):
         version='2017-04-21')
 
     workspace_id="ddab1874-15b1-4c06-9b1a-5083e6c364cd"
-    context={}
 
     response = conversation.message(workspace_id=workspace_id, input={
-        'text': text},context=context)
+        'text': text})
     entities=response["entities"]
     intents=response["intents"]
 
