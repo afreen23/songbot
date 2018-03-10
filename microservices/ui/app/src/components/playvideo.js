@@ -15,7 +15,7 @@ const Video = (props) => {
 	return (
 			<div className={classes.root}>
 				<iframe 
-					title="youtube viseo player"
+					title="youtube video player"
 					//type="text/html" 
 				    width="100%" 
 				    height="385" 

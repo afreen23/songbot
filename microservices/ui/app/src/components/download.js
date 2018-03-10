@@ -15,10 +15,9 @@ const styles = theme => ({
 });
 
 const Download =(props) => {
-	const { classes } =props;
-	const src = "https://t1.youtube7.download/13/4a30f12ea804bc65b5f98b7a0af9e59c6f9d43e3/FGTv9-oQhIg";
+	const { classes, src } =props;
 	return (<div>
-				<p><Button href={src} variant="fab"  className ={classes.button}>Downlaod<FileDownload/></Button></p>
+				<p><Button href={src} variant="fab"  className ={classes.button}>Download<FileDownload/></Button></p>
 			</div>);
 }
 
