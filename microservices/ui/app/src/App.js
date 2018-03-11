@@ -50,7 +50,7 @@ class Chat extends React.Component {
 
   //fetching bot's greeting message
   componentDidMount() {
-   fetch('https://app.boorish86.hasura-app.io/input', {
+   fetch('https://app.aesthete80.hasura-app.io/input', {
       method: 'POST',
       body: JSON.stringify({
         input: 'hi'
@@ -87,7 +87,7 @@ class Chat extends React.Component {
 
     promise.then(()=> this.refs.scrollbars.scrollToBottom())
      //for sending user input
-     fetch('https://app.boorish86.hasura-app.io/input', {
+     fetch('https://app.aesthete80.hasura-app.io/input', {
       method: 'POST',
       body: JSON.stringify({
         input: e
