@@ -41,29 +41,28 @@ const styles=theme => ({
     color: '#fff',
   }
 });
-let counter =0;
-function createData(song) {
- counter +=1;
- return {id: counter ,song: song}
-}
+
 
 class SongList extends React.Component {
   constructor(props) {
     super(props);
     this.state={
       rowsPerPage: 5,
-      page: 0
+      page: 0,
+      counter: 0
     };
   }
+
   //fetching song list
     componentWillMount() {
     var data = [];
+    var counter =0;
     var recievedPropObject = this.props.charts;
     var chartsAsString = recievedPropObject["list"];
     var chartsAsArray = chartsAsString.split("<br/>");//storing charts in an array of strings
     chartsAsArray.pop();//removing empty string
     chartsAsArray.forEach((item) => {
-      data=data.concat(createData(item))
+      data=data.concat({id: ++counter, song: item});
     })
     this.setState({charts: data});
   }
