@@ -9,9 +9,7 @@ CLUSTER_NAME = os.environ.get("CLUSTER_NAME")
 if CLUSTER_NAME is None:
     print("""
     Set the name of your cluster as an environment variable and start again:
-
     $ export CLUSTER_NAME=<cluster-name>
-
     """)
 
 if PRODUCTION_ENV == "true":

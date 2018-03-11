@@ -88,7 +88,9 @@ class Song(object):
         self.title=temp["title"]
         self.ytd=baseurl
         self.view=view
-        self.audiosrc=temp["url"]
+        self.getDownloads(temp["title"],True)
+        self.audiosrc=self.downloadable
+        self.downloadable=""
         return
 
     def Response(self,text):
@@ -118,7 +120,7 @@ class Song(object):
         if(len(songslist)!=len(temp)):
             return "Some Error Occured Please give us time to fix it",404
         for i in range(len(songslist)):
-            res+=(songslist[i].contents[0]+" "+temp[i]+"\n")
+            res+=(songslist[i].contents[0]+" "+temp[i]+"<br/>")
 
         self.chartname="Spotify"
         self.charttype=name
@@ -146,7 +148,7 @@ class Song(object):
                     songname=i.contents[0]
                     j+=1
                     if(j%2==0):
-                        res+=(songname+"'\n'")
+                        res+=(songname+"<br/>")
                     else:
                         res+=(songname+" - ")
             except:
@@ -239,7 +241,7 @@ class Song(object):
                 return
         except Exception as e:
             raise e
-    def getDownloads(self,text):
+    def getDownloads(self,text,parsed=False):
         downloadwords=["download","save","offline"]
 
         temp=text.split(' ')
@@ -249,7 +251,8 @@ class Song(object):
                 continue
             parse+=i+" "
         print(parse,file=sys.stderr)
-        self.getYoutube(parse)
+        if(not parsed):
+            self.getYoutube(parse)
         self.audiosrc=""
         self.ytd=""
         url='https://t1.youtube7.download/check.php?callback=jQuery111204704801896818165_1519396305950&v='+self.view+'&f=mp3&_=1519396305951'
@@ -293,10 +296,10 @@ def controller(text):
         version='2017-04-21')
 
     workspace_id="ddab1874-15b1-4c06-9b1a-5083e6c364cd"
-    context={}
+
 
     response = conversation.message(workspace_id=workspace_id, input={
-        'text': text},context=context)
+        'text': text})
     entities=response["entities"]
     intents=response["intents"]
 
