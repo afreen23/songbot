@@ -25,8 +25,7 @@ A bot built with **[Watson Conversation Api](https://www.ibm.com/watson/develope
 
 - [Hasura CLI](https://docs.hasura.io/0.15/manual/install-hasura-cli.html)
 - [Git](https://git-scm.com)
-- [Python 3](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/) (required only for local development)
-- [npm](https://www.npmjs.com/get-npm) (required only for local development)
+
 
 ### Quickstart
 
@@ -175,17 +174,6 @@ $ hasura microservice logs ui
 ```
 
 You can deploy further changes by going through `Edit -> Deploy -> Verify -> Debug` cycle again and again.
-
-
-### Local deployment
-
-1. Download or clone the repo
-2. ```cd microservices/ui/app```
-3. Run ```npm install```
-4. Run ```npm start```
-
-Your app will be live on `localhost`
-
 
 Boilerplate Hasura project with [Flask](http://flask.pocoo.org/) microservice.
 
