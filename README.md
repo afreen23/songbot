@@ -75,7 +75,7 @@ $ hasura microservice open ui
 
 If the browser shows this page, everything is working as expected.
 If it doesn't, go through the previous steps and see if you missed anything.
-[Gif HomePage](https://github.com/afreen23/songbot/blob/master/readme_assets/readme.png)
+![Gif HomePage](https://github.com/afreen23/songbot/blob/master/readme_assets/readme.png)
 
 ## Edit and deploy code
 
