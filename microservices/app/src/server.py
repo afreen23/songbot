@@ -253,8 +253,9 @@ class Song(object):
         print(parse,file=sys.stderr)
         if(not parsed):
             self.getYoutube(parse)
+            self.ytd=""
+
         self.audiosrc=""
-        self.ytd=""
         url='https://t1.youtube7.download/check.php?callback=jQuery111204704801896818165_1519396305950&v='+self.view+'&f=mp3&_=1519396305951'
         fhand=requests.get(url)
         temp=fhand.text
