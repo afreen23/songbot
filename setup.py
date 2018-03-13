@@ -15,12 +15,12 @@ x=os.system("git push hasura master")
 if(x!=0):
     print("Remote server :EROR Redeploying it may take seconds...")
 while(x!=0):
-    
+    time.sleep(1)
     x=os.system("git push hasura master")
 
 
 print("Deployement succesfull!!")
-time.sleep(2)
+time.sleep(3)
 print("Trying to open the url..")
 
 with open("temp.txt",'r') as fh:
