@@ -20,7 +20,7 @@ while(x!=0):
 
 
 print("Deployement succesfull!!")
-time.sleep(3)
+time.sleep(8)
 print("Trying to open the url..")
 
 with open("temp.txt",'r') as fh:
@@ -28,4 +28,4 @@ with open("temp.txt",'r') as fh:
 try:
     webbrowser.open("https://ui."+cluster+".hasura-app.io/")
 except:
-    print("Opening failed.Try opening manually..")
+    print("Opening failed.Try "+"https://ui."+cluster+".hasura-app.io/"+" opening manually..")
