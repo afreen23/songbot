@@ -20,8 +20,9 @@ while(x!=0):
 
 
 print("Deployement succesfull!!")
+print("Trying to open the url..Hold on.........")
+
 time.sleep(10)
-print("Trying to open the url..")
 
 with open("temp.txt",'r') as fh:
     cluster=fh.read()
