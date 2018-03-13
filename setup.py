@@ -20,7 +20,7 @@ while(x!=0):
 
 
 print("Deployement succesfull!!")
-time.sleep(8)
+time.sleep(10)
 print("Trying to open the url..")
 
 with open("temp.txt",'r') as fh:
