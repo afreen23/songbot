@@ -10,7 +10,7 @@ print("Step2-> adding the git repository")
 os.system("git add .")
 print("Step 3->commit and pushing to hasura cluster")
 os.system("git commit -m'Initial Commit'")
-os.system("git push hasura master")
+x=os.system("git push hasura master")
 
 if(x!=0):
     print("Remote server :EROR Redeploying it may take seconds...")
