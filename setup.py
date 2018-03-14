@@ -18,15 +18,21 @@ while(x!=0):
     time.sleep(1)
     x=os.system("git push hasura master")
 
+import yaml
+with open("clusters.yaml", 'r') as stream:
+    try:
+        clustername=yaml.load(stream)[0]['name']
+        print(clustername)
+    except yaml.YAMLError as exc:
+        print(exc)
+
 
 print("Deployement succesfull!!")
 print("Trying to open the url..Hold on.........")
 
 time.sleep(10)
 
-with open("temp.txt",'r') as fh:
-    cluster=fh.read()
 try:
-    webbrowser.open("https://ui."+cluster+".hasura-app.io/")
+    webbrowser.open("https://ui."+clustername+".hasura-app.io/")
 except:
-    print("Opening failed.Try "+"https://ui."+cluster+".hasura-app.io/"+" opening manually..")
+    print("Opening failed.Try "+"https://ui."+clustername+".hasura-app.io/"+" opening manually..")
