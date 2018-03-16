@@ -1,5 +1,7 @@
 # musicbot
 
+![gif](https://github.com/afreen23/songbot/blob/master/readme_assets/hubb.gif)
+
 ## About
 A bot built with **[Watson Conversation Api](https://www.ibm.com/watson/developercloud/conversation/api/v1/?cm_mc_uid=24808535902515066792134&cm_mc_sid_50200000=1512714807)** backend in **python** and frontend in **react js**.
 
